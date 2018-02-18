@@ -1,0 +1,54 @@
+group = 'com.enter4ward'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+buildscript {
+	ext {
+		springBootVersion = '1.5.10.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+ 		jcenter()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+ 		classpath 'cz.habarta.typescript-generator:typescript-generator-gradle-plugin:2.+'
+	}
+}
+
+dependencies {
+ 	compile 'com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.9.2'
+	compile('org.springframework.boot:spring-boot-starter-jersey')
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.springframework.boot:spring-boot-starter-websocket')
+	compile("org.springframework.boot:spring-boot-starter-data-mongodb")
+	compile project(':api-common')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'cz.habarta.typescript-generator'
+
+generateTypeScript {
+    outputFile = '../ui-client/src/app/api/user.ts'
+    classPatterns = [
+		'com.enter4ward.user.model.*',
+		'com.enter4ward.user.command.*'
+    ]
+    jsonLibrary = 'jackson2'
+    outputKind = 'module'
+    mapClasses = 'asClasses'
+    mapEnum = 'asEnum'
+    nonConstEnums = true
+    outputFileType = 'implementationFile'
+    excludeClasses = [
+    ]
+}
+
+build.dependsOn generateTypeScript
+

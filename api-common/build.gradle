@@ -1,0 +1,43 @@
+group = 'com.enter4ward'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+buildscript {
+	repositories {
+		mavenCentral()
+ 		jcenter()
+	}
+	dependencies {
+ 		classpath 'cz.habarta.typescript-generator:typescript-generator-gradle-plugin:2.+'
+	}
+}
+
+dependencies {
+ 	compile 'com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.9.2'
+}
+
+apply plugin: 'java'
+apply plugin: 'cz.habarta.typescript-generator'
+
+generateTypeScript {
+    outputFile = '../ui-client/src/app/api/common.ts'
+    classPatterns = [
+	'com.enter4ward.common.models.*',
+	'com.enter4ward.common.commands.*'
+    ]
+    jsonLibrary = 'jackson2'
+    outputKind = 'module'
+    mapClasses = 'asClasses'
+    mapEnum = 'asEnum'
+    nonConstEnums = true
+    outputFileType = 'implementationFile'
+    excludeClasses = [
+    ]
+}
+
+build.dependsOn generateTypeScript
+
