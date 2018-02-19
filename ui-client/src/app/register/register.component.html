@@ -5,7 +5,8 @@
            type="email"
            name="email"
            [(ngModel)]="command.email"
-           class="form-control"/>
+           class="form-control"
+           data-toggle="tooltip"/>
     <div *ngIf="errors.email">
       {{errors.email}}
     </div>
@@ -16,7 +17,8 @@
            name="confirmEmail"
            type="email"
            [(ngModel)]="command.confirmEmail"
-           class="form-control"/>
+           class="form-control"
+           data-toggle="tooltip"/>
     <div *ngIf="errors.confirmEmail">
       {{errors.confirmEmail}}
     </div>
@@ -27,7 +29,8 @@
            type="password"
            name="password"
            [(ngModel)]="command.password"
-           class="form-control"/>
+           class="form-control"
+           data-toggle="tooltip"/>
     <div *ngIf="errors.password">
       {{errors.password}}
     </div>
@@ -38,7 +41,8 @@
            name="confirmPassword"
            type="password"
            [(ngModel)]="command.confirmPassword"
-           class="form-control"/>
+           class="form-control"
+           data-toggle="tooltip"/>
     <div *ngIf="errors.confirmPassword">
       {{errors.confirmPassword}}
     </div>

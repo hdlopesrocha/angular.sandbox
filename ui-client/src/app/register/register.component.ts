@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RegisterUserViaEmail} from '../api/user'
 import { Api } from '../api/api';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-register',
@@ -19,8 +20,15 @@ export class RegisterComponent implements OnInit {
 
   submitForm(event){
     this.api.register(this.command).subscribe(response => {
-      console.log(response)
-      this.errors = response['errors'];
+      var errors = response['errors'];
+      console.log('errors',response);
+      this.errors = errors;
+      $.each(errors, function(key, value) {
+        $(event.target).find('[name='+key+']').each(function( index ) {
+          console.log($(this));
+          $(this).tooltip({html:value});
+        });
+      });
     });
   }
 }
