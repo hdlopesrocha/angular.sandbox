@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 2.1.406 on 2018-02-18 02:11:55.
+// Generated using typescript-generator version 2.1.406 on 2018-03-06 23:14:47.
 
 export class Command {
 }
@@ -21,7 +21,7 @@ export class Entity {
 
 export class Credentials extends Entity {
     type: CredentialsType;
-    data: { [index: string]: string };
+    data: { [index: string]: any };
 }
 
 export class EntityData extends Entity {

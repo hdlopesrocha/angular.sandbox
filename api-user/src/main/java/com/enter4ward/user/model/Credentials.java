@@ -8,7 +8,7 @@ public class Credentials extends Entity {
 
     private CredentialsType type;
 
-    private Map<String, String> data = new TreeMap<String, String>();
+    private Map<String, Object> data = new TreeMap<>();
 
     public Credentials(final UUID id) {
         super(id);
@@ -22,11 +22,11 @@ public class Credentials extends Entity {
         this.type = type;
     }
 
-    public Map<String, String> getData() {
+    public Map<String, Object> getData() {
         return data;
     }
 
-    public void setData(final Map<String, String> data) {
+    public void setData(final Map<String, Object> data) {
         this.data = data;
     }
 }

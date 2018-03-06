@@ -10,6 +10,7 @@ import com.enter4ward.user.model.Entity;
 import com.enter4ward.user.model.EntityData;
 import com.enter4ward.user.repository.CredentialsRepository;
 import com.enter4ward.user.repository.EntityDataRepository;
+import com.enter4ward.user.service.CredentialsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.TreeMap;
 import java.util.UUID;
 
@@ -24,16 +27,21 @@ import java.util.UUID;
 @RequestMapping("/api")
 public class UserController {
 
-  @Autowired
-  private CredentialsRepository credentialsRepository;
+
   @Autowired
   private EntityDataRepository entityDataRepository;
 
+  @Autowired
+  private CredentialsService credentialsService;
+
   @RequestMapping(value = "/auth", method = RequestMethod.POST)
-  public CommandResult<Boolean> authenticate(final AuthenticateViaEmailPassword command) {
+  public CommandResult<Boolean> authenticate(@RequestBody final AuthenticateViaEmailPassword command) {
     CommandResult<Boolean> result = new CommandResult<>();
-    credentialsRepository.findByTypeAndData(CredentialsType.EMAIL, "email", command.getEmail());
-    result.setResult(true);
+    try {
+      result.setResult(credentialsService.authenticateWithEmail(command.getEmail(),command.getPassword()));
+    } catch (Exception e) {
+      result.getErrors().put("exception", e.getMessage());
+    }
     return result;
   }
 
@@ -47,8 +55,7 @@ public class UserController {
       result.getErrors().put("email", "empty");
     }
     else {
-      Credentials credentials = credentialsRepository.findByTypeAndData(CredentialsType.EMAIL, "data.email", command.getEmail());
-      if(credentials != null){
+      if(credentialsService.existsCredentialsWithEmail(command.getEmail())){
         result.getErrors().put("email", "alreadyUsed");
       }
     }
@@ -67,12 +74,11 @@ public class UserController {
     }
 
     if(result.getErrors().size() == 0){
-      Credentials credentials = new Credentials(UUID.randomUUID());
-      credentials.setType(CredentialsType.EMAIL);
-      credentials.getData().put("email", command.getEmail());
-      credentials.getData().put("password", command.getPassword());
-      credentials.getData().put("confirmation", UUID.randomUUID().toString());
-      credentialsRepository.save(credentials);
+      try {
+        credentialsService.createCredentialsFromEmailPassword(UUID.randomUUID(),command.getEmail(), command.getPassword());
+      } catch (Exception e) {
+        result.getErrors().put("exception", e.getMessage());
+      }
     }
 
     result.setResult(result.getErrors().size() == 0);

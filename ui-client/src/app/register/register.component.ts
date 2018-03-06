@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { RegisterUserViaEmail} from '../api/user'
+import {Component, Input, OnInit} from '@angular/core';
+import { RegisterUserViaEmail} from '../api/user';
 import { Api } from '../api/api';
-import * as $ from 'jquery';
+
 
 @Component({
   selector: 'app-register',
@@ -9,6 +9,8 @@ import * as $ from 'jquery';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
+  @Input()
+  componentId: string;
   command: RegisterUserViaEmail = new RegisterUserViaEmail();
   errors: Object = new Object();
 
@@ -20,15 +22,7 @@ export class RegisterComponent implements OnInit {
 
   submitForm(event){
     this.api.register(this.command).subscribe(response => {
-      var errors = response['errors'];
-      console.log('errors',response);
-      this.errors = errors;
-      $.each(errors, function(key, value) {
-        $(event.target).find('[name='+key+']').each(function( index ) {
-          console.log($(this));
-          $(this).tooltip({html:value});
-        });
-      });
+      this.errors = response['errors'];
     });
   }
 }

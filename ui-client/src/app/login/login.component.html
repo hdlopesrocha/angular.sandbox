@@ -33,19 +33,6 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="confirmEmail">Confirm email:</label>
-            <input id="confirmEmail"
-                   name="confirmEmail"
-                   type="email"
-                   [(ngModel)]="command.confirmEmail"
-                   class="form-control"
-                   required="required"
-                   data-toggle="tooltip"/>
-            <div *ngIf="errors.confirmEmail">
-              {{errors.confirmEmail}}
-            </div>
-          </div>
-          <div class="form-group">
             <label for="password">Password:</label>
             <input id="password"
                    type="password"
@@ -56,19 +43,6 @@
                    data-toggle="tooltip"/>
             <div *ngIf="errors.password">
               {{errors.password}}
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="confirmPassword">Confirm password:</label>
-            <input id="confirmPassword"
-                   name="confirmPassword"
-                   type="password"
-                   [(ngModel)]="command.confirmPassword"
-                   class="form-control"
-                   required="required"
-                   data-toggle="tooltip"/>
-            <div *ngIf="errors.confirmPassword">
-              {{errors.confirmPassword}}
             </div>
           </div>
 
