@@ -7,20 +7,28 @@ import { Api } from './api/api';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { FormsModule } from '@angular/forms';
+import { ModalModule } from 'ngx-bootstrap';
+
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
+    ModalModule.forRoot(),
     FormsModule,
     HttpClientModule,
     BrowserModule,
     Api
   ],
   providers: [HttpClient],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    LoginComponent,
+    RegisterComponent
+  ]
 })
 export class AppModule { }

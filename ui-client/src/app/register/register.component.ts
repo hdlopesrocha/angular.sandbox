@@ -1,6 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import { RegisterUserViaEmail} from '../api/user';
 import { Api } from '../api/api';
+import {BsModalRef} from 'ngx-bootstrap';
 
 
 @Component({
@@ -8,21 +9,20 @@ import { Api } from '../api/api';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent implements OnInit {
-  @Input()
-  componentId: string;
+export class RegisterComponent {
   command: RegisterUserViaEmail = new RegisterUserViaEmail();
   errors: Object = new Object();
 
-  constructor(private api: Api) {
-  }
-
-  ngOnInit() {
+  constructor(private api: Api, public modal: BsModalRef) {
   }
 
   submitForm(event){
     this.api.register(this.command).subscribe(response => {
       this.errors = response['errors'];
     });
+  }
+
+  close(){
+    this.modal.hide();
   }
 }

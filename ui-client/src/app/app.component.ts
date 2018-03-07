@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import { Api } from './api/api';
 import { AuthenticateViaEmailPassword } from './api/user';
-declare var $: any;
+import {BsModalRef, BsModalService, ModalDirective} from 'ngx-bootstrap';
+import {LoginComponent} from './login/login.component';
+import {RegisterComponent} from './register/register.component';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +13,11 @@ declare var $: any;
 export class AppComponent {
   title = 'app';
 
-  constructor(private api: Api) {
+  public loginModalRef: BsModalRef;
+  public registerModalRef: BsModalRef;
+
+
+  constructor(private api: Api, public modalService : BsModalService) {
       const authCmd:  AuthenticateViaEmailPassword = new AuthenticateViaEmailPassword();
       authCmd.email = 'hdlopesrocha91@gmail.com';
       authCmd.password = 'qazokm';
@@ -20,5 +26,11 @@ export class AppComponent {
       }
 
 
+  openLoginModal() {
+    this.loginModalRef = this.modalService.show(LoginComponent);
+  }
 
+  openRegisterModal() {
+    this.registerModalRef = this.modalService.show(RegisterComponent);
+  }
 }

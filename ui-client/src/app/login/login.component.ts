@@ -1,27 +1,26 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import { AuthenticateViaEmailPassword} from '../api/user';
 import { Api } from '../api/api';
+import {BsModalRef} from 'ngx-bootstrap';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
-  @Input()
-  componentId: string;
+export class LoginComponent {
   command: AuthenticateViaEmailPassword = new AuthenticateViaEmailPassword();
   errors: Object = new Object();
 
-  constructor(private api: Api) {
+  constructor(private api: Api, public modal: BsModalRef) {
   }
-
-  ngOnInit() {
-  }
-
   submitForm(event){
     this.api.auth(this.command).subscribe(response => {
       this.errors = response['errors'];
     });
+  }
+
+  close(){
+    this.modal.hide();
   }
 }
