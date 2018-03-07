@@ -1,5 +1,5 @@
 
-<form (ngSubmit)="submitForm($event)" novalidate>
+<form (ngSubmit)="submitForm($event);" novalidate>
   <div class="modal-content">
     <div class="modal-header">
       <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
@@ -10,58 +10,55 @@
     <div class="modal-body">
       <div class="form-group">
         <label for="email">Email:</label>
-        <input id="email"
+        <input #email="bs-tooltip"
+               id="email"
                type="email"
                name="email"
                [(ngModel)]="command.email"
                class="form-control"
                required="required"
-               data-toggle="tooltip"
-               data-placement="left"
-               title="{{errors.email}}"
+               tooltip=""
+               placement="right"
         />
-        <div *ngIf="errors.email">
-          {{errors.email}}
-        </div>
       </div>
       <div class="form-group">
         <label for="confirmEmail">Confirm email:</label>
-        <input id="confirmEmail"
+        <input #confirmEmail="bs-tooltip"
+               id="confirmEmail"
                name="confirmEmail"
                type="email"
                [(ngModel)]="command.confirmEmail"
                class="form-control"
                required="required"
-               data-toggle="tooltip"/>
-        <div *ngIf="errors.confirmEmail">
-          {{errors.confirmEmail}}
-        </div>
+               tooltip=""
+               placement="right"
+        />
       </div>
       <div class="form-group">
         <label for="password">Password:</label>
-        <input id="password"
+        <input #password="bs-tooltip"
+               id="password"
                type="password"
                name="password"
                [(ngModel)]="command.password"
                class="form-control"
                required="required"
-               data-toggle="tooltip"/>
-        <div *ngIf="errors.password">
-          {{errors.password}}
-        </div>
+               tooltip=""
+               placement="right"
+        />
       </div>
       <div class="form-group">
         <label for="confirmPassword">Confirm password:</label>
-        <input id="confirmPassword"
+        <input #confirmPassword="bs-tooltip"
+               id="confirmPassword"
                name="confirmPassword"
                type="password"
                [(ngModel)]="command.confirmPassword"
                class="form-control"
                required="required"
-               data-toggle="tooltip"/>
-        <div *ngIf="errors.confirmPassword">
-          {{errors.confirmPassword}}
-        </div>
+               tooltip=""
+               placement="right"
+        />
       </div>
     </div>
     <div class="modal-footer">
@@ -76,4 +73,5 @@
     </div>
   </div>
 </form>
+
 

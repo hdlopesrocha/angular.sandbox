@@ -7,8 +7,7 @@ import { Api } from './api/api';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { FormsModule } from '@angular/forms';
-import { ModalModule } from 'ngx-bootstrap';
-
+import { ModalModule, TooltipModule } from 'ngx-bootstrap';
 
 
 @NgModule({
@@ -19,6 +18,7 @@ import { ModalModule } from 'ngx-bootstrap';
   ],
   imports: [
     ModalModule.forRoot(),
+    TooltipModule.forRoot(),
     FormsModule,
     HttpClientModule,
     BrowserModule,
