@@ -15,4 +15,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		registry.addMapping("/**")
 				.allowedMethods("PUT", "DELETE", "GET", "POST");
 	}
+
+
 }

@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 2.1.406 on 2018-03-06 23:14:47.
+// Generated using typescript-generator version 2.1.406 on 2018-03-08 22:14:04.
 
 export class Command {
 }
@@ -30,6 +30,34 @@ export class EntityData extends Entity {
 
 export class Membership extends Entity {
     to: string;
+}
+
+export class SimpleAuthentication implements Authentication {
+    name: string;
+    authorities: GrantedAuthority[];
+    details: any;
+    credentials: any;
+    authenticated: boolean;
+    principal: any;
+}
+
+export interface GrantedAuthority extends Serializable {
+    authority: string;
+}
+
+export interface Authentication extends Principal, Serializable {
+    authorities: GrantedAuthority[];
+    details: any;
+    credentials: any;
+    authenticated: boolean;
+    principal: any;
+}
+
+export interface Serializable {
+}
+
+export interface Principal {
+    name: string;
 }
 
 export enum CredentialsType {

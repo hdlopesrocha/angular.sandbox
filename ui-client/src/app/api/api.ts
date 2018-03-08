@@ -15,11 +15,11 @@ export class Api {
 
   constructor(private http: HttpClient) { }
 
-  auth(command : AuthenticateViaEmailPassword){
+  auth(command: AuthenticateViaEmailPassword){
     return this.http.post(this.host + '/api/auth', command);
   }
 
-  register(command : RegisterUserViaEmail){
+  register(command: RegisterUserViaEmail){
     return this.http.put(this.host + '/api/register', command);
   }
 
