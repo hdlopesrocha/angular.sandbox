@@ -11,12 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 import java.util.TreeMap;
 
-//@PreAuthorize("true")
 @RestController
 @RequestMapping("/api")
 public class MainController {
-    @Autowired
-    private MailService mailService;
 
     @RequestMapping("/info")
     public Map<String, Object> info() {
@@ -24,21 +21,9 @@ public class MainController {
         result.put("version", "1.0");
 
         JwtAuthentication authentication = (JwtAuthentication) SecurityContextHolder.getContext().getAuthentication();
-        if(authentication!=null){
+        if(authentication!=null) {
             result.put("userId", authentication.getUserId());
         }
-
-        Map<String, String> params = new TreeMap<>();
-        params.put("message", "hello");
-
-        mailService.sendHtmlMessage(
-                "hdlopesrocha91@gmail.com",
-                "API test",
-                "registerMail",
-                params,
-                null);
-
-
         return result;
     }
 }
