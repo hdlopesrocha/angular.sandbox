@@ -17,6 +17,9 @@ export class LoginComponent {
   submitForm(event){
     this.api.auth(this.command).subscribe(response => {
       this.errors = response['errors'];
+       this.api.setToken(response['result'] as string);
+      console.log('login', response);
+
     });
   }
 

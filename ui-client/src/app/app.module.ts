@@ -1,14 +1,14 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
-import { HttpClient } from '@angular/common/http';
-import { AppComponent } from './app.component';
-import { Api } from './api/api';
-import { RegisterComponent } from './register/register.component';
-import { LoginComponent } from './login/login.component';
-import { FormsModule } from '@angular/forms';
-import { ModalModule, TooltipModule } from 'ngx-bootstrap';
-
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {AppComponent} from './app.component';
+import {Api} from './api/api';
+import {RegisterComponent} from './register/register.component';
+import {LoginComponent} from './login/login.component';
+import {FormsModule} from '@angular/forms';
+import {ModalModule, TooltipModule} from 'ngx-bootstrap';
+import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
+import {MyHttpInterceptor} from './api/http.interceptor';
 
 @NgModule({
   declarations: [
@@ -17,18 +17,26 @@ import { ModalModule, TooltipModule } from 'ngx-bootstrap';
     RegisterComponent
   ],
   imports: [
+    BrowserModule,
+    HttpClientModule,
     ModalModule.forRoot(),
     TooltipModule.forRoot(),
     FormsModule,
-    HttpClientModule,
-    BrowserModule,
     Api
   ],
-  providers: [HttpClient],
+  providers: [
+    HttpClient,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: MyHttpInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent],
   entryComponents: [
     LoginComponent,
     RegisterComponent
   ]
 })
-export class AppModule { }
+export class AppModule {
+}

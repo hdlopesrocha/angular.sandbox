@@ -1,11 +1,10 @@
 package com.enter4ward.user.security;
 
 
-import com.enter4ward.user.config.SecurityConstants;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -13,28 +12,46 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@Component
+public class JwtAuthenticationFilter extends OncePerRequestFilter {
+    public static final String HEADER_STRING = "Authorization";
+    public static final String OPTIONS = "OPTIONS";
+    public static final String PUBLIC_PATH = "/api/public/";
 
-public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
+    private JwtValidator validator;
 
-
-    public JwtAuthenticationFilter() {
-        super("/api/private/**");
+    public JwtAuthenticationFilter(JwtValidator validator) {
+        this.validator = validator;
     }
 
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException, ServletException {
-        String header = request.getHeader(SecurityConstants.HEADER_STRING);
-        if(header == null ){
-            throw new RuntimeException("JWT token is missing");
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        if (request.getRequestURI().startsWith(PUBLIC_PATH) ||
+                OPTIONS.equals(request.getMethod())) {
+            return true;
         }
-
-        JwtAuthenticationToken token = new JwtAuthenticationToken(header);
-        return getAuthenticationManager().authenticate(token);
+        return false;
     }
 
     @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        super.successfulAuthentication(request, response, chain, authResult);
-        chain.doFilter(request,response);
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    FilterChain chain) throws ServletException, IOException {
+        String header = request.getHeader(HEADER_STRING);
+        if (header == null) {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
+        }
+        // Exclude Bearer
+        String token = header.substring(7);
+        JwtUser jwtUser = validator.read(token);
+        if (jwtUser == null) {
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return;
+        }
+        SecurityContextHolder.getContext().setAuthentication(new JwtAuthentication(jwtUser.getId()));
+        chain.doFilter(request, response);
     }
+
+
 }

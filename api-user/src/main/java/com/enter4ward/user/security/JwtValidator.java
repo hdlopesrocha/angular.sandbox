@@ -1,35 +1,42 @@
 package com.enter4ward.user.security;
 
-import com.enter4ward.user.config.SecurityConstants;
-import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.impl.crypto.MacProvider;
+import io.jsonwebtoken.impl.DefaultClaims;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.security.Key;
 import java.util.Date;
 import java.util.UUID;
 
 @Component
 public class JwtValidator {
+    @Value("${jwt.secret}")
+    private String secret;
+    @Value("${jwt.expiration}")
+    private Long expiration;
+
+
     public JwtUser read(String token) {
-        Claims body = Jwts.parser()
-                .setSigningKey(SecurityConstants.SECRET)
-                .parseClaimsJwt(token)
-                .getBody();
+        DefaultClaims jwt = (DefaultClaims) Jwts.parser()
+                .setSigningKey(secret)
+                .parse(token).getBody();
         JwtUser user = new JwtUser();
-        user.setId(UUID.fromString((String) body.get("userId")));
+        user.setId(UUID.fromString(jwt.getSubject()));
         return user;
     }
 
-    public String write(JwtUser user){
-        Claims claims = Jwts.claims();
-        claims.put("userId", user.getId().toString());
-
+    public String write(JwtUser user) {
+        Date now = new Date();
         return Jwts.builder()
-                .setExpiration(new Date(new Date().getTime() + SecurityConstants.EXPIRATION_TIME))
-                .setClaims(claims)
-                .signWith(SignatureAlgorithm.HS512, SecurityConstants.SECRET).compact();
+                .setIssuedAt(now)
+                .setExpiration(calculateExpirationDate(now))
+                .setSubject(user.getId().toString())
+                .signWith(SignatureAlgorithm.HS512, secret)
+                .compact();
+    }
+
+    private Date calculateExpirationDate(Date createdDate) {
+        return new Date(createdDate.getTime() + expiration * 1000);
     }
 }

@@ -18,11 +18,7 @@ export class AppComponent {
 
 
   constructor(private api: Api, public modalService : BsModalService) {
-    const authCmd: AuthenticateViaEmailPassword = new AuthenticateViaEmailPassword();
-    authCmd.email = 'hdlopesrocha91@gmail.com';
-    authCmd.password = 'qazokm';
 
-    this.api.auth(authCmd).subscribe(response => console.log(response));
   }
 
 
@@ -33,4 +29,8 @@ export class AppComponent {
   openRegisterModal() {
     this.registerModalRef = this.modalService.show(RegisterComponent);
   }
+
+   getInfo() {
+    this.api.getInfo().subscribe(response => console.log(response));
+   }
 }

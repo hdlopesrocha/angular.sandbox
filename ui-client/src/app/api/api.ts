@@ -2,6 +2,8 @@ import { AuthenticateViaEmailPassword , RegisterUserViaEmail} from './user'
 import { HttpClient } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Observable} from 'rxjs/Observable';
+import { CommandResult } from './common';
 
 @NgModule({
   imports: [
@@ -15,12 +17,24 @@ export class Api {
 
   constructor(private http: HttpClient) { }
 
-  auth(command: AuthenticateViaEmailPassword){
-    return this.http.post(this.host + '/api/auth', command);
+  public getToken(): string {
+    return localStorage.getItem('token');
   }
 
-  register(command: RegisterUserViaEmail){
-    return this.http.put(this.host + '/api/register', command);
+  public setToken(token: string) {
+    localStorage.setItem('token', token);
+  }
+
+  auth(command: AuthenticateViaEmailPassword): Observable<Object> {
+    return this.http.post(this.host + '/api/public/auth', command);
+  }
+
+  register(command: RegisterUserViaEmail): Observable<Object> {
+    return this.http.put(this.host + '/api/public/register', command);
+  }
+
+  getInfo(){
+    return this.http.get(this.host + '/api/info');
   }
 
 }
