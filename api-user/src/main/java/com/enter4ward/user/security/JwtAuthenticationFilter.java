@@ -24,7 +24,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
-        if (request.getRequestURI().startsWith(PUBLIC_PATH) ||
+        if (
+                request.getRequestURI().startsWith(PUBLIC_PATH) ||
                 OPTIONS.equals(request.getMethod())) {
             return true;
         }
@@ -47,6 +48,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             return;
         }
+
         SecurityContextHolder.getContext().setAuthentication(new JwtAuthentication(jwtUser.getId()));
         chain.doFilter(request, response);
     }

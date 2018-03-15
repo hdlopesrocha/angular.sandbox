@@ -1,8 +1,8 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, ElementRef, QueryList, Renderer2, ViewChildren, ViewContainerRef} from '@angular/core';
 import {RegisterUserViaEmail} from '../api/user';
 import {Api} from '../api/api';
-import {BsModalRef, TooltipDirective} from 'ngx-bootstrap';
-
+import {BsModalRef, TooltipConfig, TooltipDirective} from 'ngx-bootstrap';
+import {ComponentLoaderFactory} from 'ngx-bootstrap/component-loader/component-loader.factory';
 
 @Component({
   selector: 'app-register',
@@ -11,39 +11,55 @@ import {BsModalRef, TooltipDirective} from 'ngx-bootstrap';
 })
 export class RegisterComponent {
   command: RegisterUserViaEmail = new RegisterUserViaEmail();
-  errors: Object = new Object();
-  @ViewChild('email') emailView: TooltipDirective;
-  @ViewChild('confirmEmail') confirmEmailView: TooltipDirective;
-  @ViewChild('password') passwordView: TooltipDirective;
-  @ViewChild('confirmPassword') confirmPasswordView: TooltipDirective;
 
-  constructor(private api: Api, public modal: BsModalRef) {
+  viewContainers: Map<string, ElementRef> = new Map<string, ElementRef>();
+  tooltips: Map<string, TooltipDirective> = new Map<string, TooltipDirective>();
+
+  @ViewChildren('fieldError')
+  set onTooltipLoaded(list: QueryList<ElementRef>) {
+    list.forEach(ref => {
+      console.log('elem', ref);
+      this.viewContainers.set(ref.nativeElement.id, ref);
+    });
   }
 
-  submitForm(event) {
-    console.log('email');
+
+
+
+  constructor(private api: Api, public modal: BsModalRef, public factory: ComponentLoaderFactory,
+              public renderer: Renderer2, public viewContainer: ViewContainerRef) {
+  }
+
+  hideTooltips() {
+    this.tooltips.forEach((value, key) => {
+      console.log('hide', value);
+    });
+  }
+
+  showTooltip(id, content){
+    console.log('show', id, content);
+    const ref = this.viewContainers.get(id);
+    if (ref) {
+      console.log('ref', ref);
+      const config = new TooltipConfig();
+      config.placement = 'right';
+      config.triggers = 'focus manual';
+
+      const tooltip = new TooltipDirective(this.viewContainer, this.renderer, ref, this.factory, config);
+      tooltip.tooltip = content;
+      tooltip.show();
+      this.tooltips.set(id, tooltip);
+    }
+  }
+
+  submitForm() {
     this.api.register(this.command).subscribe(response => {
-      let errors = response['errors'];
 
-      if(errors['email']){
-        this.emailView.tooltip = errors['email'];
-        this.emailView.show();
-      }
-      if(errors['confirmEmail']){
-        this.confirmEmailView.tooltip = errors['confirmEmail'];
-        this.confirmEmailView.show();
-      }
-      if(errors['password']){
-        this.passwordView.tooltip = errors['password'];
-        this.passwordView.show();
-      }
-      if(errors['confirmPassword']){
-        this.confirmPasswordView.tooltip = errors['confirmPassword'];
-        this.confirmPasswordView.show();
-      }
-
-
-
+      const errors = response['errors'];
+      this.hideTooltips();
+      Object.keys(errors).forEach(id => {
+        this.showTooltip(id, errors[id].message);
+      });
     });
   }
 

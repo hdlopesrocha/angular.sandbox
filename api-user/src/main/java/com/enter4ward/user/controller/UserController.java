@@ -11,6 +11,7 @@ import com.enter4ward.user.security.JwtAuthentication;
 import com.enter4ward.user.security.JwtUser;
 import com.enter4ward.user.security.JwtValidator;
 import com.enter4ward.user.service.CredentialsService;
+import com.enter4ward.user.utility.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -95,11 +96,7 @@ public class UserController {
             try {
                 Credentials credentials =
                         credentialsService.createCredentialsFromEmailPassword(UUID.randomUUID(), command.getEmail(), command.getPassword());
-
-                String url = request.getRequestURL().toString();
-                String host = url.substring(0, url.indexOf(request.getRequestURI()));
-                credentialsService.sendActivationEmail(host, credentials);
-
+                credentialsService.sendActivationEmail(Utils.getHost(request), credentials);
             } catch (Exception e) {
                 result.getErrors().put("exception", new Error(e.getMessage()));
             }
