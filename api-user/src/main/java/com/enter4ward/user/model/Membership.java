@@ -10,7 +10,6 @@ public class Membership extends Entity {
         this.to = to;
     }
 
-
     public UUID getTo() {
         return to;
     }

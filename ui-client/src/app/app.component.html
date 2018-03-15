@@ -48,6 +48,13 @@
               (click)="getInfo()">
         Version
       </button>
+      <div *ngFor="let product of products">
+        <div>
+          {{ product.title}}:{{product.description}}
+          <img *ngFor="let src of product.images">
+        </div>
+      </div>
+
     </div>
   </div>
 </div>

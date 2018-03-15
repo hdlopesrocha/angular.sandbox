@@ -1,4 +1,4 @@
-import { AuthenticateViaEmailPassword , RegisterUserViaEmail} from './user'
+import {AuthenticateViaEmailPassword, Product, RegisterUserViaEmail} from './user';
 import { HttpClient } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -25,16 +25,20 @@ export class Api {
     localStorage.setItem('token', token);
   }
 
-  auth(command: AuthenticateViaEmailPassword): Observable<Object> {
-    return this.http.post(this.host + '/api/public/auth', command);
+  auth(command: AuthenticateViaEmailPassword): Observable<CommandResult<string>> {
+    return this.http.post<CommandResult<string>>(this.host + '/api/public/auth', command);
   }
 
-  register(command: RegisterUserViaEmail): Observable<Object> {
-    return this.http.put(this.host + '/api/public/register', command);
+  register(command: RegisterUserViaEmail): Observable<CommandResult<boolean>> {
+    return this.http.put<CommandResult<boolean>>(this.host + '/api/public/register', command);
   }
 
   getInfo(){
     return this.http.get(this.host + '/api/info');
+  }
+
+  getProducts(): Observable<Product[]> {
+    return this.http.get<Product[]>(this.host + '/api/public/product');
   }
 
 }

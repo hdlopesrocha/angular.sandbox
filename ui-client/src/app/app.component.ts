@@ -1,6 +1,6 @@
 import {Component, ViewChild} from '@angular/core';
 import { Api } from './api/api';
-import { AuthenticateViaEmailPassword } from './api/user';
+import {AuthenticateViaEmailPassword, Product} from './api/user';
 import {BsModalRef, BsModalService, ModalDirective} from 'ngx-bootstrap';
 import {LoginComponent} from './login/login.component';
 import {RegisterComponent} from './register/register.component';
@@ -15,10 +15,12 @@ export class AppComponent {
 
   public loginModalRef: BsModalRef;
   public registerModalRef: BsModalRef;
-
+  public products: Product[];
 
   constructor(private api: Api, public modalService : BsModalService) {
-
+    this.api.getProducts().subscribe(list => {
+      this.products = list;
+    });
   }
 
 

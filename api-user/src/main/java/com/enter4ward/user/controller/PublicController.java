@@ -6,11 +6,13 @@ import com.enter4ward.common.commands.Error;
 import com.enter4ward.user.command.AuthenticateViaEmailPassword;
 import com.enter4ward.user.command.RegisterUserViaEmail;
 import com.enter4ward.user.model.Credentials;
+import com.enter4ward.user.model.Product;
 import com.enter4ward.user.repository.EntityDataRepository;
 import com.enter4ward.user.security.JwtAuthentication;
 import com.enter4ward.user.security.JwtUser;
 import com.enter4ward.user.security.JwtValidator;
 import com.enter4ward.user.service.CredentialsService;
+import com.enter4ward.user.service.ProductService;
 import com.enter4ward.user.utility.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,18 +22,22 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.UUID;
 
 @PreAuthorize("true")
 @RestController
 @RequestMapping("/api/public")
-public class UserController {
+public class PublicController {
 
     @Autowired
     private EntityDataRepository entityDataRepository;
 
     @Autowired
     private CredentialsService credentialsService;
+
+    @Autowired
+    private ProductService productService;
 
     @Autowired
     private JwtValidator validator;
@@ -106,4 +112,9 @@ public class UserController {
         return result;
     }
 
+
+    @RequestMapping(value = "/product", method = RequestMethod.GET)
+    public List<Product> getProducts() {
+        return productService.getProducts();
+    }
 }

@@ -54,8 +54,7 @@ export class RegisterComponent {
 
   submitForm() {
     this.api.register(this.command).subscribe(response => {
-
-      const errors = response['errors'];
+      const errors = response.errors;
       this.hideTooltips();
       Object.keys(errors).forEach(id => {
         this.showTooltip(id, errors[id].message);

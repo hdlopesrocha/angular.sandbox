@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 2.1.406 on 2018-03-08 22:14:04.
+// Generated using typescript-generator version 2.1.406 on 2018-03-15 23:05:28.
 
 export class Command {
 }
@@ -32,36 +32,25 @@ export class Membership extends Entity {
     to: string;
 }
 
-export class SimpleAuthentication implements Authentication {
-    name: string;
-    authorities: GrantedAuthority[];
-    details: any;
-    credentials: any;
-    authenticated: boolean;
-    principal: any;
-}
-
-export interface GrantedAuthority extends Serializable {
-    authority: string;
-}
-
-export interface Authentication extends Principal, Serializable {
-    authorities: GrantedAuthority[];
-    details: any;
-    credentials: any;
-    authenticated: boolean;
-    principal: any;
-}
-
-export interface Serializable {
-}
-
-export interface Principal {
-    name: string;
+export class Product extends Entity {
+    images: string[];
+    price: { [index: string]: number };
+    title: string;
+    decription: string;
 }
 
 export enum CredentialsType {
     EMAIL = "EMAIL",
     GOOGLE = "GOOGLE",
     FACEBOOK = "FACEBOOK",
+}
+
+export enum Currency {
+    USD = "USD",
+    EUR = "EUR",
+    GBP = "GBP",
+    BTC = "BTC",
+    ETH = "ETH",
+    LTC = "LTC",
+    XMR = "XMR",
 }
