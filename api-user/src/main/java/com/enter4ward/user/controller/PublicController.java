@@ -129,14 +129,15 @@ public class PublicController {
         return productService.getProducts();
     }
 
-    @RequestMapping(value = "/file/{uuid}/{filename:.*}", method = RequestMethod.GET)
+    @RequestMapping(value = "/file/{uuid}", method = RequestMethod.GET)
     public void getFile(HttpServletResponse response,
-                               @PathVariable String uuid,
-                               @PathVariable String filename) throws IOException {
+                               @PathVariable String uuid) throws IOException {
         GridFS gridFS = new GridFS(database.getDb());
-        GridFSDBFile gfs = gridFS.findOne(uuid + "/" + filename);
+        DBObject query = new BasicDBObject("_id",uuid);
+        GridFSDBFile gfs = gridFS.findOne(query);
         if (gfs != null) {
             IOUtils.copy(gfs.getInputStream(), response.getOutputStream());
+            response.setContentType(gfs.getContentType());
             response.flushBuffer();
         } else {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);

@@ -1,5 +1,6 @@
 package com.enter4ward.user.changelog;
 
+import com.enter4ward.user.utility.Utils;
 import com.github.mongobee.changeset.ChangeLog;
 import com.github.mongobee.changeset.ChangeSet;
 import com.mongodb.BasicDBObject;
@@ -20,12 +21,14 @@ import java.util.UUID;
 @ChangeLog
 public class DatabaseChangelog {
 
-    private String loadResource(GridFS gridFS, String filename) throws IOException {
+    private String saveResource(GridFS gridFS, String filename) throws IOException {
         InputStream resource = new ClassPathResource(filename).getURL().openStream();
-        String resultantFilename = UUID.randomUUID() + "/"+filename;
-        GridFSInputFile file = gridFS.createFile(resource, resultantFilename);
+        UUID id = UUID.randomUUID();
+        GridFSInputFile file = gridFS.createFile(resource, filename);
+        file.setId(id.toString());
+        file.setContentType(Utils.guessContentType(filename));
         file.save();
-        return resultantFilename;
+        return id.toString();
     }
 
     @ChangeSet(order = "0001", id = "initialSetup", author = "hdlopesrocha")
@@ -55,9 +58,9 @@ public class DatabaseChangelog {
             DBObject product = new BasicDBObject();
             product.put("_id", UUID.fromString("71e7f4f2-46ce-4ef0-abdb-bfbb3391ae47"));
             product.put("attachments", Arrays.asList(
-                    loadResource(gridFS, "img1.jpg"),
-                    loadResource(gridFS, "img2.jpg"),
-                    loadResource(gridFS, "img3.jpg")
+                    saveResource(gridFS, "img1.jpg"),
+                    saveResource(gridFS, "img2.jpg"),
+                    saveResource(gridFS, "img3.jpg")
             ));
             product.put("price", new Document("EUR", 10));
             product.put("title", "product01.title");
@@ -69,9 +72,9 @@ public class DatabaseChangelog {
             DBObject product = new BasicDBObject();
             product.put("_id", UUID.fromString("e2174c61-5ea3-4f54-ac2a-985229dd45da"));
             product.put("attachments", Arrays.asList(
-                    loadResource(gridFS, "img1.jpg"),
-                    loadResource(gridFS, "img2.jpg"),
-                    loadResource(gridFS, "img3.jpg")
+                    saveResource(gridFS, "img1.jpg"),
+                    saveResource(gridFS, "img2.jpg"),
+                    saveResource(gridFS, "img3.jpg")
             ));
             product.put("price", new Document("EUR", 20));
             product.put("title", "product02.title");
@@ -83,9 +86,9 @@ public class DatabaseChangelog {
             DBObject product = new BasicDBObject();
             product.put("_id", UUID.fromString("f13aa72e-c728-4593-8a55-f4325d5718b3"));
             product.put("attachments", Arrays.asList(
-                    loadResource(gridFS, "img1.jpg"),
-                    loadResource(gridFS, "img2.jpg"),
-                    loadResource(gridFS, "img3.jpg")
+                    saveResource(gridFS, "img1.jpg"),
+                    saveResource(gridFS, "img2.jpg"),
+                    saveResource(gridFS, "img3.jpg")
             ));
             product.put("price", new Document("EUR", 20));
             product.put("title", "product03.title");
