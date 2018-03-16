@@ -6,16 +6,33 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
+import com.mongodb.gridfs.GridFS;
+import com.mongodb.gridfs.GridFSInputFile;
 import org.bson.Document;
+import org.springframework.core.io.ClassPathResource;
 
-import java.util.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Arrays;
+import java.util.Base64;
+import java.util.UUID;
 
 @ChangeLog
 public class DatabaseChangelog {
 
+    private String loadResource(GridFS gridFS, String filename) throws IOException {
+        InputStream resource = new ClassPathResource(filename).getURL().openStream();
+        String resultantFilename = UUID.randomUUID() + "/"+filename;
+        GridFSInputFile file = gridFS.createFile(resource, resultantFilename);
+        file.save();
+        return resultantFilename;
+    }
+
     @ChangeSet(order = "0001", id = "initialSetup", author = "hdlopesrocha")
-    public void initialSetup(final DB db) {
+    public void initialSetup(final DB db) throws IOException {
         db.dropDatabase();
+        GridFS gridFS = new GridFS(db);
+
         DBCollection credentialsCollection = db.getCollection("credentials");
         DBCollection productsCollection = db.getCollection("product");
 
@@ -32,34 +49,47 @@ public class DatabaseChangelog {
             adminCredentials.put("data", data);
             credentialsCollection.save(adminCredentials);
         }
+
         // product #01
         {
             DBObject product = new BasicDBObject();
             product.put("_id", UUID.fromString("71e7f4f2-46ce-4ef0-abdb-bfbb3391ae47"));
-            product.put("attachments", Arrays.asList("url1", "url2", "url3"));
+            product.put("attachments", Arrays.asList(
+                    loadResource(gridFS, "img1.jpg"),
+                    loadResource(gridFS, "img2.jpg"),
+                    loadResource(gridFS, "img3.jpg")
+            ));
             product.put("price", new Document("EUR", 10));
-            product.put("title","product01.title");
-            product.put("description","product01.description");
+            product.put("title", "product01.title");
+            product.put("description", "product01.description");
             productsCollection.save(product);
         }
         // product #02
         {
             DBObject product = new BasicDBObject();
             product.put("_id", UUID.fromString("e2174c61-5ea3-4f54-ac2a-985229dd45da"));
-            product.put("attachments", Arrays.asList("url1", "url2", "url3"));
+            product.put("attachments", Arrays.asList(
+                    loadResource(gridFS, "img1.jpg"),
+                    loadResource(gridFS, "img2.jpg"),
+                    loadResource(gridFS, "img3.jpg")
+            ));
             product.put("price", new Document("EUR", 20));
-            product.put("title","product02.title");
-            product.put("description","product02.description");
+            product.put("title", "product02.title");
+            product.put("description", "product02.description");
             productsCollection.save(product);
         }
         // product #03
         {
             DBObject product = new BasicDBObject();
             product.put("_id", UUID.fromString("f13aa72e-c728-4593-8a55-f4325d5718b3"));
-            product.put("attachments", Arrays.asList("url1", "url2", "url3"));
+            product.put("attachments", Arrays.asList(
+                    loadResource(gridFS, "img1.jpg"),
+                    loadResource(gridFS, "img2.jpg"),
+                    loadResource(gridFS, "img3.jpg")
+            ));
             product.put("price", new Document("EUR", 20));
-            product.put("title","product03.title");
-            product.put("description","product03.description");
+            product.put("title", "product03.title");
+            product.put("description", "product03.description");
             productsCollection.save(product);
         }
     }

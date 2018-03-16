@@ -52,7 +52,7 @@
       <div class="card-body">
         <h5 class="card-title">{{ product.title}}</h5>
         <h6 class="card-subtitle mb-2 text-muted">{{product.description}}</h6>
-        <img *ngFor="let src of product.attachments" src="{{src}}">
+        <img width="100%" *ngFor="let src of product.attachments" src="{{api.host}}/api/public/file/{{src}}">
       </div>
     </div>
   </div>

@@ -8,20 +8,28 @@ import com.enter4ward.user.command.RegisterUserViaEmail;
 import com.enter4ward.user.model.Credentials;
 import com.enter4ward.user.model.Product;
 import com.enter4ward.user.repository.EntityDataRepository;
-import com.enter4ward.user.security.JwtAuthentication;
 import com.enter4ward.user.security.JwtUser;
 import com.enter4ward.user.security.JwtValidator;
 import com.enter4ward.user.service.CredentialsService;
 import com.enter4ward.user.service.ProductService;
 import com.enter4ward.user.utility.Utils;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
+import com.mongodb.gridfs.GridFS;
+import com.mongodb.gridfs.GridFSDBFile;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.bson.Document;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,6 +37,9 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/public")
 public class PublicController {
+
+    @Autowired
+    private MongoTemplate database;
 
     @Autowired
     private EntityDataRepository entityDataRepository;
@@ -116,5 +127,19 @@ public class PublicController {
     @RequestMapping(value = "/product", method = RequestMethod.GET)
     public List<Product> getProducts() {
         return productService.getProducts();
+    }
+
+    @RequestMapping(value = "/file/{uuid}/{filename:.*}", method = RequestMethod.GET)
+    public void getFile(HttpServletResponse response,
+                               @PathVariable String uuid,
+                               @PathVariable String filename) throws IOException {
+        GridFS gridFS = new GridFS(database.getDb());
+        GridFSDBFile gfs = gridFS.findOne(uuid + "/" + filename);
+        if (gfs != null) {
+            IOUtils.copy(gfs.getInputStream(), response.getOutputStream());
+            response.flushBuffer();
+        } else {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+        }
     }
 }
