@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 2.1.406 on 2018-03-15 23:05:01.
+// Generated using typescript-generator version 2.1.406 on 2018-03-17 13:42:34.
 
 export class Command {
 }

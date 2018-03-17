@@ -5,6 +5,7 @@ import com.enter4ward.common.commands.CommandResult;
 import com.enter4ward.common.commands.Error;
 import com.enter4ward.user.command.AuthenticateViaEmailPassword;
 import com.enter4ward.user.command.RegisterUserViaEmail;
+import com.enter4ward.user.model.Cart;
 import com.enter4ward.user.model.Credentials;
 import com.enter4ward.user.model.Product;
 import com.enter4ward.user.repository.EntityDataRepository;
@@ -127,6 +128,20 @@ public class PublicController {
     @RequestMapping(value = "/product", method = RequestMethod.GET)
     public List<Product> getProducts() {
         return productService.getProducts();
+    }
+
+    @RequestMapping(value = "/cart", method = RequestMethod.GET)
+    public Cart getCart() {
+        return productService.getCart(credentialsService.getCurrentEntityId());
+    }
+
+
+    @RequestMapping(value = "/cart", method = RequestMethod.POST)
+    public void setCart(@RequestBody Cart cart) {
+        UUID currentEntity = credentialsService.getCurrentEntityId();
+        if(cart != null && cart.getId() != null && cart.getId().equals(currentEntity)) {
+            productService.setCart(cart);
+        }
     }
 
     @RequestMapping(value = "/file/{uuid}", method = RequestMethod.GET)

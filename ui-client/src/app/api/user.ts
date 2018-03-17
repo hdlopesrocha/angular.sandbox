@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 2.1.406 on 2018-03-15 23:05:28.
+// Generated using typescript-generator version 2.1.406 on 2018-03-17 13:42:53.
 
 export class Command {
 }
@@ -19,6 +19,10 @@ export class Entity {
     id: string;
 }
 
+export class Cart extends Entity {
+    amounts: { [index: string]: number };
+}
+
 export class Credentials extends Entity {
     type: CredentialsType;
     data: { [index: string]: any };
@@ -33,10 +37,10 @@ export class Membership extends Entity {
 }
 
 export class Product extends Entity {
-    images: string[];
+    attachments: string[];
     price: { [index: string]: number };
-    title: string;
-    decription: string;
+    title: { [index: string]: string };
+    description: { [index: string]: string };
 }
 
 export enum CredentialsType {
@@ -53,4 +57,11 @@ export enum Currency {
     ETH = "ETH",
     LTC = "LTC",
     XMR = "XMR",
+}
+
+export enum Lang {
+    EN = "EN",
+    FR = "FR",
+    PT = "PT",
+    CN = "CN",
 }

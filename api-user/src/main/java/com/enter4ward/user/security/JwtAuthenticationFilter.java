@@ -24,23 +24,31 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
-        if (
-                request.getRequestURI().startsWith(PUBLIC_PATH) ||
-                OPTIONS.equals(request.getMethod())) {
+        if (OPTIONS.equals(request.getMethod())) {
             return true;
         }
         return false;
+    }
+
+    private boolean isPublic(HttpServletRequest request){
+        return request.getRequestURI().startsWith(PUBLIC_PATH);
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain chain) throws ServletException, IOException {
+
         String header = request.getHeader(HEADER_STRING);
         if (header == null) {
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+            if(isPublic(request)) {
+                chain.doFilter(request, response);
+            } else {
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+            }
             return;
         }
+
         // Exclude Bearer
         String token = header.substring(7);
         JwtUser jwtUser = validator.read(token);

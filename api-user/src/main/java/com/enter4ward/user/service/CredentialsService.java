@@ -3,9 +3,11 @@ package com.enter4ward.user.service;
 import com.enter4ward.user.model.Credentials;
 import com.enter4ward.user.model.CredentialsType;
 import com.enter4ward.user.repository.CredentialsRepository;
+import com.enter4ward.user.security.JwtAuthentication;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
@@ -68,6 +70,15 @@ public class CredentialsService {
             return true;
         }
         return false;
+    }
+
+    public UUID getCurrentEntityId(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if(auth != null && auth instanceof JwtAuthentication){
+            JwtAuthentication jwtAuth = (JwtAuthentication) auth ;
+            return jwtAuth.getEntityId();
+        }
+        return null;
     }
 
     public boolean existsCredentialsWithEmail(final String email) {

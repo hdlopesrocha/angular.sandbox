@@ -1,4 +1,4 @@
-import {AuthenticateViaEmailPassword, Product, RegisterUserViaEmail} from './user';
+import {AuthenticateViaEmailPassword, Product, RegisterUserViaEmail, Cart} from './user';
 import { HttpClient } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -35,6 +35,20 @@ export class Api {
 
   getInfo(){
     return this.http.get(this.host + '/api/info');
+  }
+
+  getCart(): Observable<Cart> {
+    const cartStr = localStorage.getItem('cart');
+    const cart = (cartStr ? JSON.parse(cartStr) : null) as Cart;
+    if (!cart || cart.id) {
+      return this.http.get<Cart>(this.host + '/api/public/cart');
+    }
+    return Observable.of(cart);
+  }
+
+  sendCart(cart: Cart) {
+    localStorage.setItem('cart', JSON.stringify(cart));
+    this.http.post(this.host + '/api/public/cart', cart);
   }
 
   getProducts(): Observable<Product[]> {

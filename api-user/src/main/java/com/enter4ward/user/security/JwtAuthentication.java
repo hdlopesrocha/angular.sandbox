@@ -8,9 +8,9 @@ import java.util.UUID;
 
 public class JwtAuthentication implements Authentication {
 
-    private UUID userId;
+    private UUID entityId;
     public JwtAuthentication(UUID userId) {
-        this.userId = userId;
+        this.entityId = userId;
     }
 
     @Override
@@ -48,7 +48,7 @@ public class JwtAuthentication implements Authentication {
         return null;
     }
 
-    public UUID getUserId() {
-        return userId;
+    public UUID getEntityId() {
+        return entityId;
     }
 }

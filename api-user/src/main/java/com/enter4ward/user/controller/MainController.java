@@ -2,8 +2,6 @@ package com.enter4ward.user.controller;
 
 
 import com.enter4ward.user.security.JwtAuthentication;
-import com.enter4ward.user.service.MailService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,7 +26,7 @@ public class MainController {
 
         JwtAuthentication authentication = (JwtAuthentication) SecurityContextHolder.getContext().getAuthentication();
         if(authentication!=null) {
-            result.put("userId", authentication.getUserId());
+            result.put("userId", authentication.getEntityId());
         }
         return result;
     }
