@@ -72,9 +72,9 @@ public class DatabaseChangelog {
             DBObject product = new BasicDBObject();
             product.put("_id", UUID.fromString("e2174c61-5ea3-4f54-ac2a-985229dd45da"));
             product.put("attachments", Arrays.asList(
-                    saveResource(gridFS, "img1.jpg"),
                     saveResource(gridFS, "img2.jpg"),
-                    saveResource(gridFS, "img3.jpg")
+                    saveResource(gridFS, "img3.jpg"),
+                    saveResource(gridFS, "img1.jpg")
             ));
             product.put("price", new Document("EUR", 20));
             product.put("title", "product02.title");
@@ -86,9 +86,9 @@ public class DatabaseChangelog {
             DBObject product = new BasicDBObject();
             product.put("_id", UUID.fromString("f13aa72e-c728-4593-8a55-f4325d5718b3"));
             product.put("attachments", Arrays.asList(
+                    saveResource(gridFS, "img3.jpg"),
                     saveResource(gridFS, "img1.jpg"),
-                    saveResource(gridFS, "img2.jpg"),
-                    saveResource(gridFS, "img3.jpg")
+                    saveResource(gridFS, "img2.jpg")
             ));
             product.put("price", new Document("EUR", 20));
             product.put("title", "product03.title");

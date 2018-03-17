@@ -136,8 +136,8 @@ public class PublicController {
         DBObject query = new BasicDBObject("_id",uuid);
         GridFSDBFile gfs = gridFS.findOne(query);
         if (gfs != null) {
-            IOUtils.copy(gfs.getInputStream(), response.getOutputStream());
             response.setContentType(gfs.getContentType());
+            IOUtils.copy(gfs.getInputStream(), response.getOutputStream());
             response.flushBuffer();
         } else {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);

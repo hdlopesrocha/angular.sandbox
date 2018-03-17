@@ -50,9 +50,16 @@
   <div class="row col-12">
     <div *ngFor="let product of products" class="card col-lg-4 col-md-6 col-sm-12">
       <div class="card-body">
-        <h5 class="card-title">{{ product.title}}</h5>
+        <h5 class="card-title">{{product.title}}</h5>
         <h6 class="card-subtitle mb-2 text-muted">{{product.description}}</h6>
-        <img width="100%" *ngFor="let src of product.attachments" src="{{api.host}}/api/public/file/{{src}}">
+
+        <carousel interval="0">
+          <slide *ngFor="let src of product.attachments">
+            <div class="slideImg"
+                 style.background-image="url({{api.host}}/api/public/file/{{src}})">
+            </div>
+          </slide>
+        </carousel>
       </div>
     </div>
   </div>

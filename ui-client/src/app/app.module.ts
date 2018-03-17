@@ -6,7 +6,7 @@ import {Api} from './api/api';
 import {RegisterComponent} from './register/register.component';
 import {LoginComponent} from './login/login.component';
 import {FormsModule} from '@angular/forms';
-import {ModalModule, TooltipModule} from 'ngx-bootstrap';
+import {CarouselModule, ModalModule, TooltipModule} from 'ngx-bootstrap';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import {MyHttpInterceptor} from './api/http.interceptor';
 
@@ -21,6 +21,7 @@ import {MyHttpInterceptor} from './api/http.interceptor';
     HttpClientModule,
     ModalModule.forRoot(),
     TooltipModule.forRoot(),
+    CarouselModule.forRoot(),
     FormsModule,
     Api
   ],
