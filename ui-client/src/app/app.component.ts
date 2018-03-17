@@ -1,9 +1,10 @@
 import {Component, ViewChild} from '@angular/core';
-import { Api } from './api/api';
+import {Api} from './api/api';
 import {AuthenticateViaEmailPassword, Product} from './api/user';
 import {BsModalRef, BsModalService, ModalDirective} from 'ngx-bootstrap';
 import {LoginComponent} from './login/login.component';
 import {RegisterComponent} from './register/register.component';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +18,13 @@ export class AppComponent {
   public registerModalRef: BsModalRef;
   public products: Product[];
 
-  constructor(private api: Api, public modalService : BsModalService) {
+  constructor(private api: Api, public modalService: BsModalService, translate: TranslateService) {
+    // this language will be used as a fallback when a translation isn't found in the current language
+    translate.setDefaultLang('en');
+
+    // the lang to use, if the lang isn't available, it will use the current loader to get them
+    translate.use('en');
+
     this.api.getProducts().subscribe(list => {
       this.products = list;
     });
@@ -32,7 +39,7 @@ export class AppComponent {
     this.registerModalRef = this.modalService.show(RegisterComponent);
   }
 
-   getInfo() {
+  getInfo() {
     this.api.getInfo().subscribe(response => console.log(response));
-   }
+  }
 }

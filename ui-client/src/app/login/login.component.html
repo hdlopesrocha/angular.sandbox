@@ -1,14 +1,14 @@
 <form (ngSubmit)="submitForm($event)" novalidate>
 <div class="modal-content">
   <div class="modal-header">
-    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+    <h5 class="modal-title" id="exampleModalLabel">{{'command.AuthenticateViaEmailPassword.title' | translate}}</h5>
     <button type="button" class="close" aria-label="Close" (click)="close()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
     <div class="form-group">
-      <label for="email">Email:</label>
+      <label for="email">{{'command.AuthenticateViaEmailPassword.email' | translate}}</label>
       <input id="email"
              type="email"
              name="email"
@@ -18,7 +18,7 @@
              data-placement="left"/>
     </div>
     <div class="form-group">
-      <label for="password">Password:</label>
+      <label for="password">{{'command.AuthenticateViaEmailPassword.password' | translate}}</label>
       <input id="password"
              type="password"
              name="password"

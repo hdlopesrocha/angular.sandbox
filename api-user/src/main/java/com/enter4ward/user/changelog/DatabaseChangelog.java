@@ -63,8 +63,8 @@ public class DatabaseChangelog {
                     saveResource(gridFS, "img3.jpg")
             ));
             product.put("price", new Document("EUR", 10));
-            product.put("title", "product01.title");
-            product.put("description", "product01.description");
+            product.put("title", new BasicDBObject("EN", "Product 1"));
+            product.put("description", new BasicDBObject("EN", "Description 1"));
             productsCollection.save(product);
         }
         // product #02
@@ -77,8 +77,8 @@ public class DatabaseChangelog {
                     saveResource(gridFS, "img1.jpg")
             ));
             product.put("price", new Document("EUR", 20));
-            product.put("title", "product02.title");
-            product.put("description", "product02.description");
+            product.put("title", new BasicDBObject("EN", "Product 2"));
+            product.put("description", new BasicDBObject("EN", "Description 2"));
             productsCollection.save(product);
         }
         // product #03
@@ -91,8 +91,8 @@ public class DatabaseChangelog {
                     saveResource(gridFS, "img2.jpg")
             ));
             product.put("price", new Document("EUR", 20));
-            product.put("title", "product03.title");
-            product.put("description", "product03.description");
+            product.put("title", new BasicDBObject("EN", "Product 3"));
+            product.put("description", new BasicDBObject("EN", "Description 3"));
             productsCollection.save(product);
         }
     }

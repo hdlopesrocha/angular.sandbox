@@ -3,6 +3,7 @@ import {RegisterUserViaEmail} from '../api/user';
 import {Api} from '../api/api';
 import {BsModalRef, TooltipConfig, TooltipDirective} from 'ngx-bootstrap';
 import {ComponentLoaderFactory} from 'ngx-bootstrap/component-loader/component-loader.factory';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-register',
@@ -18,16 +19,13 @@ export class RegisterComponent {
   @ViewChildren('fieldError')
   set onTooltipLoaded(list: QueryList<ElementRef>) {
     list.forEach(ref => {
-      console.log('elem', ref);
       this.viewContainers.set(ref.nativeElement.id, ref);
     });
   }
 
-
-
-
   constructor(private api: Api, public modal: BsModalRef, public factory: ComponentLoaderFactory,
-              public renderer: Renderer2, public viewContainer: ViewContainerRef) {
+              public renderer: Renderer2, public viewContainer: ViewContainerRef,
+              public translate: TranslateService) {
   }
 
   hideTooltips() {
@@ -42,7 +40,7 @@ export class RegisterComponent {
     if (ref) {
       console.log('ref', ref);
       const config = new TooltipConfig();
-      config.placement = 'right';
+      config.placement = 'top';
       config.triggers = 'focus manual';
 
       const tooltip = new TooltipDirective(this.viewContainer, this.renderer, ref, this.factory, config);
@@ -57,7 +55,9 @@ export class RegisterComponent {
       const errors = response.errors;
       this.hideTooltips();
       Object.keys(errors).forEach(id => {
-        this.showTooltip(id, errors[id].message);
+        this.showTooltip(id, this.translate.instant(
+          'command.RegisterUserViaEmail.error.' + errors[id].message
+        ));
       });
     });
   }

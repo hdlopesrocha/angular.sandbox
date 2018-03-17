@@ -8,8 +8,8 @@ public class Product extends Entity {
 
     private List<String> attachments;
     private Map<Currency, Double> price;
-    private String title;
-    private String description;
+    private Map<Lang,String> title;
+    private Map<Lang,String> description;
 
     public Product(final UUID id) {
         super(id);
@@ -31,19 +31,19 @@ public class Product extends Entity {
         this.price = price;
     }
 
-    public String getTitle() {
+    public Map<Lang, String> getTitle() {
         return title;
     }
 
-    public void setTitle(final String title) {
+    public void setTitle(final Map<Lang, String> title) {
         this.title = title;
     }
 
-    public String getDescription() {
+    public Map<Lang, String> getDescription() {
         return description;
     }
 
-    public void setDescription(final String description) {
+    public void setDescription(final Map<Lang, String> description) {
         this.description = description;
     }
 }

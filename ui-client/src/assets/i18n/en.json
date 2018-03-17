@@ -1,0 +1,28 @@
+{
+  "ui":{
+    "close": "Close"
+  },
+  "command":{
+    "RegisterUserViaEmail":{
+      "title": "Register user",
+      "email": "E-mail",
+      "confirmEmail": "Confirm e-mail",
+      "password": "Password",
+      "confirmPassword": "Confirm password",
+      "error.empty":"This field cannot be empty",
+      "error.notEqual":"This is not equal",
+      "error.alreadyUsed":"This e-mail is already used"
+    },
+    "AuthenticateViaEmailPassword": {
+      "title": "Login",
+      "email": "E-mail",
+      "password": "Password"
+    }
+  },
+  "cart" : {
+    "title": "Cart"
+  },
+  "user" : {
+    "title": "User"
+  }
+}

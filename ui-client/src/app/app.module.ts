@@ -6,9 +6,12 @@ import {Api} from './api/api';
 import {RegisterComponent} from './register/register.component';
 import {LoginComponent} from './login/login.component';
 import {FormsModule} from '@angular/forms';
-import {CarouselModule, ModalModule, TooltipModule} from 'ngx-bootstrap';
+import {CarouselModule, ModalModule, PopoverModule, TooltipModule} from 'ngx-bootstrap';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import {MyHttpInterceptor} from './api/http.interceptor';
+import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 @NgModule({
   declarations: [
@@ -22,6 +25,17 @@ import {MyHttpInterceptor} from './api/http.interceptor';
     ModalModule.forRoot(),
     TooltipModule.forRoot(),
     CarouselModule.forRoot(),
+    PopoverModule.forRoot(),
+    AngularFontAwesomeModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (http) => {
+          return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+        },
+        deps: [HttpClient]
+      }
+    }),
     FormsModule,
     Api
   ],
