@@ -28,15 +28,16 @@ public class CredentialsService {
     private MailService mailService;
 
     public Credentials createCredentialsFromEmailPassword(
-            final UUID uuid,
-            final String email, final String password) throws IOException, NoSuchAlgorithmException {
+            final UUID owner,
+            final String email,
+            final String password) throws IOException, NoSuchAlgorithmException {
 
         byte[] salt = new byte[SALT_SIZE];
         random.nextBytes(salt);
         byte[] hash = getHash(salt, password.getBytes(StandardCharsets.UTF_8));
         String activation = RandomStringUtils.randomAlphanumeric(32);
 
-        Credentials credentials = new Credentials(uuid);
+        Credentials credentials = new Credentials(UUID.randomUUID(), owner);
         credentials.getData().put("email", email);
         credentials.getData().put("salt", salt);
         credentials.getData().put("hash", hash);
@@ -93,7 +94,7 @@ public class CredentialsService {
             byte[] salt = (byte[]) credentials.getData().get("salt");
             byte[] hash = (byte[]) credentials.getData().get("hash");
             if (Arrays.equals(hash, getHash(salt, password.getBytes(StandardCharsets.UTF_8)))) {
-                return credentials.getId();
+                return credentials.getOwner();
             }
         }
         return null;

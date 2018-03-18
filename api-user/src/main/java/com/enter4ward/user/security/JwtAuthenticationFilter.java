@@ -53,7 +53,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String token = header.substring(7);
         JwtUser jwtUser = validator.read(token);
         if (jwtUser == null) {
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            if(isPublic(request)) {
+                chain.doFilter(request, response);
+            } else {
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            }
             return;
         }
 

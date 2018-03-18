@@ -23,8 +23,11 @@ export class RegisterComponent {
     });
   }
 
-  constructor(private api: Api, public modal: BsModalRef, public factory: ComponentLoaderFactory,
-              public renderer: Renderer2, public viewContainer: ViewContainerRef,
+  constructor(private api: Api,
+              public modal: BsModalRef,
+              public factory: ComponentLoaderFactory,
+              public renderer: Renderer2,
+              public viewContainer: ViewContainerRef,
               public translate: TranslateService) {
   }
 

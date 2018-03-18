@@ -6,12 +6,15 @@ import java.util.UUID;
 
 public class Credentials extends Entity {
 
+    private UUID owner;
+
     private CredentialsType type;
 
     private Map<String, Object> data = new TreeMap<>();
 
-    public Credentials(final UUID id) {
+    public Credentials(final UUID id, final  UUID owner) {
         super(id);
+        this.owner = owner;
     }
 
     public CredentialsType getType() {
@@ -28,5 +31,13 @@ public class Credentials extends Entity {
 
     public void setData(final Map<String, Object> data) {
         this.data = data;
+    }
+
+    public void setOwner(final UUID owner) {
+        this.owner = owner;
+    }
+
+    public UUID getOwner() {
+        return owner;
     }
 }

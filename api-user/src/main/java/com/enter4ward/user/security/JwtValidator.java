@@ -18,12 +18,16 @@ public class JwtValidator {
 
 
     public JwtUser read(String token) {
-        DefaultClaims jwt = (DefaultClaims) Jwts.parser()
-                .setSigningKey(secret)
-                .parse(token).getBody();
-        JwtUser user = new JwtUser();
-        user.setId(UUID.fromString(jwt.getSubject()));
-        return user;
+        try {
+            DefaultClaims jwt = (DefaultClaims) Jwts.parser()
+                    .setSigningKey(secret)
+                    .parse(token).getBody();
+            JwtUser user = new JwtUser();
+            user.setId(UUID.fromString(jwt.getSubject()));
+            return user;
+        } catch (Exception e){
+            return null;
+        }
     }
 
     public String write(JwtUser user) {

@@ -13,6 +13,7 @@
           <button type="button"
                   class="btn btn-default btn-secondary"
                   [popover]="cartTemplate"
+                  [outsideClick]="true"
                   popoverTitle="{{'cart.title' | translate}}"
                   placement="bottom">
             <fa name="shopping-cart"></fa>
@@ -22,6 +23,7 @@
           <button type="button"
                   class="btn btn-default btn-secondary"
                   [popover]="userTemplate"
+                  [outsideClick]="true"
                   popoverTitle="{{'user.title' | translate}}"
                   placement="bottom">
             <fa name="user"></fa>
@@ -31,32 +33,18 @@
   </div>
 </nav>
 
-
 <!-- Page Content -->
 <div class="container">
   <div class="row col-12">
-    <div *ngFor="let product of products" class="card col-lg-4 col-md-6 col-sm-12">
-      <div class="card-body">
-        <h5 class="card-title">{{product.title['EN']}}</h5>
-        <h6 class="card-subtitle mb-2 text-muted">{{product.description['EN']}}</h6>
-        <span>
-          {{product.price['EUR']}}€
-        </span>
-
-        <carousel interval="0">
-          <slide *ngFor="let src of product.attachments">
-            <div class="slideImg"
-                 style.background-image="url({{api.host}}/api/public/file/{{src}})">
-            </div>
-          </slide>
-        </carousel>
-      </div>
-    </div>
+    <app-product-card class="card col-lg-4 col-md-6 col-sm-12"
+                      *ngFor="let product of products"
+                      [product]="product">
+    </app-product-card>
   </div>
 </div>
 
 <ng-template #cartTemplate>
-  Just another
+  <app-cart-popover></app-cart-popover>
 </ng-template>
 
 

@@ -42,8 +42,9 @@ public class DatabaseChangelog {
         // admin setup
         {
             DBObject adminCredentials = new BasicDBObject();
-            adminCredentials.put("_id", UUID.fromString("5448f260-5cd0-26fb-82e5-136500befd88"));
+            adminCredentials.put("_id", "5448f260-5cd0-26fb-82e5-136500befd88");
             adminCredentials.put("_class", "com.enter4ward.user.model.Credentials");
+            adminCredentials.put("owner", "a5ae8468-df6d-48bb-a0e0-f1b3f6b21831");
             adminCredentials.put("type", "EMAIL");
             Document data = new Document();
             data.put("email", "hdlopesrocha91@gmail.com");

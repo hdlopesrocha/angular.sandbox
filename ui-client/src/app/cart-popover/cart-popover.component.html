@@ -1,0 +1,5 @@
+<div *ngIf="cart">
+  <div class="card" *ngFor="let product of getMapKeys(products)">
+    {{product.title['EN']}} ({{products.get(product)}})
+  </div>
+</div>

@@ -6,18 +6,24 @@ import {Api} from './api/api';
 import {RegisterComponent} from './register/register.component';
 import {LoginComponent} from './login/login.component';
 import {FormsModule} from '@angular/forms';
-import {CarouselModule, ModalModule, PopoverModule, TooltipModule} from 'ngx-bootstrap';
+import {CarouselComponent, CarouselModule, ModalModule, PopoverModule, TooltipModule} from 'ngx-bootstrap';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import {MyHttpInterceptor} from './api/http.interceptor';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { CartPopoverComponent } from './cart-popover/cart-popover.component';
+import { CartDetailsComponent } from './cart-details/cart-details.component';
+import { ProductCardComponent } from './product-card/product-card.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    CartPopoverComponent,
+    CartDetailsComponent,
+    ProductCardComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +56,8 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
   bootstrap: [AppComponent],
   entryComponents: [
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    CarouselComponent,
   ]
 })
 export class AppModule {

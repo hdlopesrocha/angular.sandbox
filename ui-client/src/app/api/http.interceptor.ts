@@ -12,7 +12,6 @@ export class MyHttpInterceptor implements HttpInterceptor {
   constructor(public api: Api) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log('req', request);
     if(this.api.getToken()) {
       request = request.clone({
         setHeaders: {

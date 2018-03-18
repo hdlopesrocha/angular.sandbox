@@ -19,13 +19,15 @@ public class ProductService {
     @Autowired
     private CartRepository cartRepository;
 
-    public List<Product> getProducts() {
-        return productRepository.findAll();
+    public Iterable<Product> getProducts(List<UUID> id) {
+        return (id == null || id.size() == 0) ?
+                productRepository.findAll():
+                productRepository.findAll(id);
     }
 
     public Cart getCart(final UUID entityId) {
         if (entityId == null) {
-            return new Cart(null);
+            return null;
         } else {
             Cart cart = cartRepository.findOne(entityId);
             return cart != null ? cart : new Cart(entityId);

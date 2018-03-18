@@ -126,8 +126,8 @@ public class PublicController {
 
 
     @RequestMapping(value = "/product", method = RequestMethod.GET)
-    public List<Product> getProducts() {
-        return productService.getProducts();
+    public Iterable<Product> getProducts(@RequestParam(required = false) List<UUID> id) {
+        return productService.getProducts(id);
     }
 
     @RequestMapping(value = "/cart", method = RequestMethod.GET)

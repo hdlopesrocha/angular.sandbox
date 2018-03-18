@@ -17,6 +17,10 @@
       "title": "Login",
       "email": "E-mail",
       "password": "Password"
+    },
+    "SetCart": {
+      "amount": "Amount",
+      "submit": "Add to cart"
     }
   },
   "cart" : {
