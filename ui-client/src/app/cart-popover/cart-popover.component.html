@@ -1,5 +1,29 @@
-<div *ngIf="cart">
-  <div class="card" *ngFor="let product of getMapKeys(products)">
-    {{product.title['EN']}} ({{products.get(product)}})
+<h3 class="popover-title popover-header">{{'cart.title' | translate}}</h3>
+<div class="popover-content popover-body" *ngIf="products">
+  <div class="product" *ngFor="let product of products">
+    <div class="col-12">
+      {{product.title['EN']}}
+    </div>
+    <div class="col-12">
+      {{product.price['EUR']}}€
+      <fa name="times"></fa>
+      {{cart.amounts[product.id]}} = {{product.price['EUR'] * cart.amounts[product.id]}}€
+
+      <div class="input-group">
+        <input class="form-control"
+               type="number"
+               min="1"
+               [(ngModel)]="cart.amounts[product.id]"
+               (change)="updateCart()"/>
+        <button type="button"
+                class="btn btn-danger"
+                (click)="deleteProduct(product)">
+          <fa name="trash"></fa>
+        </button>
+      </div>
+    </div>
   </div>
+</div>
+<div class="popover-footer">
+  <button type="button" class="btn btn-success">{{'cart.checkout' | translate}}</button>
 </div>

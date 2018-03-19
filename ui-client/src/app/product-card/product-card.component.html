@@ -4,7 +4,16 @@
     <h5 class="card-title">{{product.title['EN']}}</h5>
   </div>
   <div class="row">
-    <h6 class="card-subtitle mb-2 text-muted">{{product.description['EN']}}</h6>
+    <carousel interval="0">
+      <slide *ngFor="let src of product.attachments">
+        <div class="slideImg"
+             style.background-image="url({{api.host}}/api/public/file/{{src}})">
+        </div>
+      </slide>
+    </carousel>
+  </div>
+  <div class="row">
+    <h6 class="text-muted">{{product.description['EN']}}</h6>
   </div>
   <div class="row">
     <span>{{product.price['EUR']}}€</span>
@@ -16,22 +25,16 @@
              type="number"
              name="amount"
              [(ngModel)]="amount"
+             min="1"
              value="{{amount}}"
              class="form-control"
              required="required"
              data-placement="left"/>
       <span class="input-group-btn">
       <button type="button"
-              class="btn btn-secondary"
+              class="btn btn-success"
               (click)="submit()">{{'command.SetCart.submit' | translate}}</button>
       </span>
     </div>
   </div>
-    <carousel interval="0">
-      <slide *ngFor="let src of product.attachments">
-        <div class="slideImg"
-             style.background-image="url({{api.host}}/api/public/file/{{src}})">
-        </div>
-      </slide>
-    </carousel>
 </div>

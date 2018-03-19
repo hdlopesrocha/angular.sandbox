@@ -39,25 +39,17 @@ export class Api {
   }
 
   getCart(): Observable<Cart> {
-    return this.http.get<Cart>(this.host + '/api/public/cart');
-  }
-
-  addToCart(product: string, amount: number) {
-    this.getCart().subscribe(cart => {
-      cart = this.internalAddToCart(cart, product, amount);
-      this.setLocalCart(cart);
-
-      this.http.post(this.host + '/api/public/cart', cart).subscribe(() => {});
-    }, () => {
-      const cart = this.internalAddToCart(null, product, amount);
-      this.setLocalCart(cart);
+    return this.http.get<Cart>(this.host + '/api/public/cart').map(cart => {
+      return cart ? cart : this.getLocalCart();
     });
   }
 
-  private internalAddToCart(cart: Cart, product: string, amount: number){
-    if (!cart) {
-      cart = this.getLocalCart();
-    }
+  setCart(cart: Cart) {
+    this.setLocalCart(cart);
+    this.http.post(this.host + '/api/public/cart', cart).subscribe(() => {});
+  }
+
+  addToCart(cart: Cart, product: string, amount: number){
     if (!cart.amounts[product]) {
       cart.amounts[product] = amount;
     } else {

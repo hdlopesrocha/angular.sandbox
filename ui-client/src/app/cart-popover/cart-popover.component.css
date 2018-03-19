@@ -1,0 +1,13 @@
+.popover-footer {
+  color: blue;
+  text-align: right;
+}
+
+.popover-body {
+  padding: 0px;
+}
+
+.product {
+  border-bottom: 1px solid rgba(0,0,0,.2);
+  padding-bottom: 4px;
+}

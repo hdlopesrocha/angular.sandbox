@@ -1,5 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Product} from '../api/user';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Cart, Product} from '../api/user';
 import {Api} from '../api/api';
 
 @Component({
@@ -12,16 +12,22 @@ export class ProductCardComponent implements OnInit {
   @Input()
   public product: Product;
   public amount: number;
+  @Output()
+  public cartUpdated: EventEmitter<Cart> = new EventEmitter();
 
   constructor(private api: Api) {
-    this.amount = 0;
+    this.amount = 1;
   }
 
   ngOnInit() {
   }
 
   submit() {
-    this.api.addToCart(this.product.id, this.amount);
+    this.api.getCart().subscribe(cart => {
+      this.api.addToCart(cart, this.product.id, this.amount);
+      this.api.setCart(cart);
+      this.cartUpdated.emit(this.api.getLocalCart());
+    });
   }
 
 }

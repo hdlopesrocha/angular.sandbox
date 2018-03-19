@@ -14,7 +14,6 @@
                   class="btn btn-default btn-secondary"
                   [popover]="cartTemplate"
                   [outsideClick]="true"
-                  popoverTitle="{{'cart.title' | translate}}"
                   placement="bottom">
             <fa name="shopping-cart"></fa>
           </button>
@@ -38,13 +37,16 @@
   <div class="row col-12">
     <app-product-card class="card col-lg-4 col-md-6 col-sm-12"
                       *ngFor="let product of products"
+                      (cartUpdated)="onCartUpdated($event)"
                       [product]="product">
     </app-product-card>
   </div>
 </div>
 
 <ng-template #cartTemplate>
-  <app-cart-popover></app-cart-popover>
+  <app-cart-popover [cart]="cart"
+                    (cartUpdated)="onCartUpdated($event)">
+  </app-cart-popover>
 </ng-template>
 
 

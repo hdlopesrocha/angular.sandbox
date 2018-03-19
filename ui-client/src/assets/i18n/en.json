@@ -24,7 +24,8 @@
     }
   },
   "cart" : {
-    "title": "Cart"
+    "title": "Cart",
+    "checkout": "Checkout"
   },
   "user" : {
     "title": "User"

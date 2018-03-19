@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Cart, Product} from '../api/user';
 import {Api} from '../api/api';
 
@@ -8,30 +8,34 @@ import {Api} from '../api/api';
   styleUrls: ['./cart-popover.component.css']
 })
 export class CartPopoverComponent implements OnInit {
+  @Input('cart')
   public cart: Cart;
-  public products: Map<Product, number> = new Map<Product, number>();
+  public products: Product[] = [];
+  @Output()
+  public cartUpdated: EventEmitter<Cart> = new EventEmitter();
 
   constructor(public api: Api) {
-    this.api.getCart().subscribe(cart => {
-      if (!cart) {
-        cart = this.api.getLocalCart();
-      }
 
-      this.cart = cart;
-      this.api.getProducts(this.getKeys(cart.amounts)).subscribe(list => {
-        this.products = new Map<Product, number>();
-        list.forEach(prod => {
-          this.products.set(prod, cart.amounts[prod.id]);
-        });
+  }
+
+  ngOnInit() {
+    this.api.getProducts(this.getKeys(this.cart.amounts)).subscribe(list => {
+      this.products = [];
+      list.forEach(prod => {
+        this.products.push(prod);
       });
     });
   }
 
-  ngOnInit() {
+  updateCart() {
+    this.api.setCart(this.cart);
+    this.cartUpdated.emit(this.cart);
   }
 
-  getMapKeys(map) {
-    return Array.from(map.keys());
+  deleteProduct(product) {
+    this.products.splice(this.products.indexOf(product), 1);
+    delete this.cart.amounts[product.id];
+    this.updateCart();
   }
 
   getKeys(map) {
