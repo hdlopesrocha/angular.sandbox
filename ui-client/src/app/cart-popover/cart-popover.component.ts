@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Cart, Product} from '../api/user';
 import {Api} from '../api/api';
+import {CartService} from '../service/cart.service';
 
 @Component({
   selector: 'app-cart-popover',
@@ -8,34 +9,44 @@ import {Api} from '../api/api';
   styleUrls: ['./cart-popover.component.css']
 })
 export class CartPopoverComponent implements OnInit {
-  @Input('cart')
+
   public cart: Cart;
   public products: Product[] = [];
-  @Output()
-  public cartUpdated: EventEmitter<Cart> = new EventEmitter();
 
-  constructor(public api: Api) {
+  constructor(public api: Api, private cartService: CartService) {
 
+  }
+
+  onCartArrived(ctx) {
+    return function (cart) {
+      ctx.cart = cart;
+      if (cart.amounts.length) {
+        ctx.api.getProducts(ctx.getKeys(cart.amounts)).subscribe(list => {
+          ctx.products = [];
+          list.forEach(prod => {
+            ctx.products.push(prod);
+          });
+        });
+      } else {
+        ctx.products = [];
+      }
+    };
   }
 
   ngOnInit() {
-    this.api.getProducts(this.getKeys(this.cart.amounts)).subscribe(list => {
-      this.products = [];
-      list.forEach(prod => {
-        this.products.push(prod);
-      });
-    });
+    this.api.getCart(this.cartService.getLocalCart()).subscribe(this.onCartArrived(this));
+    this.cartService.cartUpdated.subscribe(this.onCartArrived(this));
   }
 
-  updateCart() {
-    this.api.setCart(this.cart);
-    this.cartUpdated.emit(this.cart);
+  updateCart(cart: Cart) {
+    this.cartService.updateCart(cart);
+    this.api.setCart(cart);
   }
 
-  deleteProduct(product) {
+  deleteProduct(cart: Cart, product) {
     this.products.splice(this.products.indexOf(product), 1);
     delete this.cart.amounts[product.id];
-    this.updateCart();
+    this.updateCart(cart);
   }
 
   getKeys(map) {

@@ -14,10 +14,10 @@
                type="number"
                min="1"
                [(ngModel)]="cart.amounts[product.id]"
-               (change)="updateCart()"/>
+               (change)="updateCart(cart)"/>
         <button type="button"
                 class="btn btn-danger"
-                (click)="deleteProduct(product)">
+                (click)="deleteProduct(cart, product)">
           <fa name="trash"></fa>
         </button>
       </div>
@@ -25,5 +25,5 @@
   </div>
 </div>
 <div class="popover-footer">
-  <button type="button" class="btn btn-success">{{'cart.checkout' | translate}}</button>
+  <button type="button" [routerLink]="['/checkout']" class="btn btn-success">{{'cart.checkout' | translate}}</button>
 </div>

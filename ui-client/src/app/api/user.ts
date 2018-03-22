@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 2.1.406 on 2018-03-17 13:42:53.
+// Generated using typescript-generator version 2.1.406 on 2018-03-21 23:37:42.
 
 export class Command {
 }
@@ -19,11 +19,23 @@ export class Entity {
     id: string;
 }
 
+export class Address extends Entity {
+    owner: string;
+    country: Country;
+    city: string;
+    postalCode: string;
+    addressLine1: string;
+    addressLine2: string;
+    comment: string;
+    phone: string;
+}
+
 export class Cart extends Entity {
     amounts: { [index: string]: number };
 }
 
 export class Credentials extends Entity {
+    owner: string;
     type: CredentialsType;
     data: { [index: string]: any };
 }
@@ -41,6 +53,13 @@ export class Product extends Entity {
     price: { [index: string]: number };
     title: { [index: string]: string };
     description: { [index: string]: string };
+}
+
+export enum Country {
+    FR = "FR",
+    GB = "GB",
+    CH = "CH",
+    BE = "BE",
 }
 
 export enum CredentialsType {

@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Cart, Product} from '../api/user';
 import {Api} from '../api/api';
+import {CartService} from '../service/cart.service';
 
 @Component({
   selector: 'app-product-card',
@@ -12,10 +13,8 @@ export class ProductCardComponent implements OnInit {
   @Input()
   public product: Product;
   public amount: number;
-  @Output()
-  public cartUpdated: EventEmitter<Cart> = new EventEmitter();
 
-  constructor(private api: Api) {
+  constructor(private api: Api, private cartService: CartService) {
     this.amount = 1;
   }
 
@@ -23,10 +22,10 @@ export class ProductCardComponent implements OnInit {
   }
 
   submit() {
-    this.api.getCart().subscribe(cart => {
-      this.api.addToCart(cart, this.product.id, this.amount);
+    this.api.getCart(this.cartService.getLocalCart()).subscribe(cart => {
+      this.cartService.addToCart(cart, this.product.id, this.amount);
+      this.cartService.updateCart(cart);
       this.api.setCart(cart);
-      this.cartUpdated.emit(this.api.getLocalCart());
     });
   }
 

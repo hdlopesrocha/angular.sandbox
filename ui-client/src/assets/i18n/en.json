@@ -1,6 +1,8 @@
 {
   "ui":{
-    "close": "Close"
+    "close": "Close",
+    "logoText":"Oil Queen",
+    "enter": "Enter Store"
   },
   "command":{
     "RegisterUserViaEmail":{
@@ -27,7 +29,22 @@
     "title": "Cart",
     "checkout": "Checkout"
   },
+  "address" : {
+    "addressLine1": "Address line 1",
+    "addressLine2": "Address line 2",
+    "postalCode": "Postal code",
+    "city": "City",
+    "country": "Country",
+    "phone": "Phone",
+    "comment": "Comment"
+  },
   "user" : {
     "title": "User"
+  },
+  "country" : {
+    "FR": "France",
+    "GB": "United Kingdom",
+    "CH": "Switzerland",
+    "BE": "Belgium"
   }
 }

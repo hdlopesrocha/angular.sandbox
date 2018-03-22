@@ -9,12 +9,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     public static final String HEADER_STRING = "Authorization";
     public static final String OPTIONS = "OPTIONS";
-    public static final String PUBLIC_PATH = "/api/public/";
+    public static final String [] PUBLIC_PATHS = new String [] {"/api/public/", "/public/"};
 
     private JwtValidator validator;
 
@@ -31,7 +32,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private boolean isPublic(HttpServletRequest request){
-        return request.getRequestURI().startsWith(PUBLIC_PATH);
+        return Arrays.stream(PUBLIC_PATHS).anyMatch( path ->
+            request.getRequestURI().startsWith(path)
+        );
     }
 
     @Override

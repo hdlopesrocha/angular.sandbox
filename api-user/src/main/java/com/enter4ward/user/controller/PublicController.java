@@ -22,6 +22,7 @@ import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
@@ -139,23 +140,32 @@ public class PublicController {
     @RequestMapping(value = "/cart", method = RequestMethod.POST)
     public void setCart(@RequestBody Cart cart) {
         UUID currentEntity = credentialsService.getCurrentEntityId();
-        if(cart != null && cart.getId() != null && cart.getId().equals(currentEntity)) {
+        if(cart != null && currentEntity != null) {
+            cart.setId(currentEntity);
             productService.setCart(cart);
         }
     }
 
-    @RequestMapping(value = "/file/{uuid}", method = RequestMethod.GET)
+    @RequestMapping(value = "/file/{id:.+}", method = RequestMethod.GET)
     public void getFile(HttpServletResponse response,
-                               @PathVariable String uuid) throws IOException {
+                               @PathVariable String id) throws IOException {
         GridFS gridFS = new GridFS(database.getDb());
-        DBObject query = new BasicDBObject("_id",uuid);
+        DBObject query = new BasicDBObject("_id",id);
         GridFSDBFile gfs = gridFS.findOne(query);
         if (gfs != null) {
             response.setContentType(gfs.getContentType());
             IOUtils.copy(gfs.getInputStream(), response.getOutputStream());
             response.flushBuffer();
         } else {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            ClassPathResource resource = new ClassPathResource("public/" + id);
+            if(resource.exists()) {
+                response.setContentType(Utils.guessContentType(id));
+                IOUtils.copy(resource.getURL().openStream(), response.getOutputStream());
+                response.flushBuffer();
+            }
+            else {
+                response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            }
         }
     }
 }

@@ -1,10 +1,10 @@
 import { Injectable, Injector } from '@angular/core';
 import {HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse, HttpErrorResponse} from '@angular/common/http';
-import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/do';
-import {Api} from './api';
+import {Api} from '../api/api';
+import {Observable} from 'rxjs/Observable';
 
 
 @Injectable()
