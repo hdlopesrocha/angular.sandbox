@@ -20,7 +20,7 @@ export class CartPopoverComponent implements OnInit {
   onCartArrived(ctx) {
     return function (cart) {
       ctx.cart = cart;
-      if (cart.amounts.length) {
+      if (Object.keys(cart.amounts).length) {
         ctx.api.getProducts(ctx.getKeys(cart.amounts)).subscribe(list => {
           ctx.products = [];
           list.forEach(prod => {

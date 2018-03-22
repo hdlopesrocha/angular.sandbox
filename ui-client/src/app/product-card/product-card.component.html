@@ -4,13 +4,16 @@
   </div>
   <div class="card-body">
     <div class="row">
-      <carousel interval="0">
+      <carousel interval="0" id="carousel{{product.id}}">
         <slide *ngFor="let src of product.attachments">
           <div class="slideImg"
                style.background-image="url({{api.host}}/api/public/file/{{src}})">
           </div>
         </slide>
       </carousel>
+      <button class="toggleFullScreen btn" (click)="toggleFullScreen(product)">
+        <fa name="expand"></fa>
+      </button>
     </div>
     <div class="row">
       <h6 class="text-muted">{{product.description['EN']}}</h6>

@@ -68,52 +68,64 @@ public class DatabaseChangelog {
         productsCollection.save( new BasicDBObject() {{
             put("_id", UUID.fromString("71e7f4f2-46ce-4ef0-abdb-bfbb3391ae47"));
             put("attachments", Arrays.asList(
-                    saveResource(gridFS, "img1.jpg"),
-                    saveResource(gridFS, "img2.jpg"),
-                    saveResource(gridFS, "img3.jpg")
+                    saveResource(gridFS, "public/prod01/DSC_1396.jpg"),
+                    saveResource(gridFS, "public/prod01/DSC_1391.jpg"),
+                    saveResource(gridFS, "public/prod01/DSC_1394.jpg"),
+                    saveResource(gridFS, "public/prod01/DSC_1395.jpg"),
+                    saveResource(gridFS, "public/prod01/DSC_1605.jpg"),
+                    saveResource(gridFS, "public/prod01/DSC_1607.jpg"),
+                    saveResource(gridFS, "public/prod01/DSC_1626.jpg"),
+                    saveResource(gridFS, "public/prod01/DSC_1640.jpg"),
+                    saveResource(gridFS, "public/prod01/DSC_1655.jpg"),
+                    saveResource(gridFS, "public/prod01/DSC_1667.jpg"),
+                    saveResource(gridFS, "public/prod01/DSC_1669.jpg")
             ));
             put("price", new Document("EUR", 10));
             put("title", new BasicDBObject("EN", "Product 1"));
-            put("description", new BasicDBObject("EN", "Description 1"));
+            put("description", new BasicDBObject("EN", "Lorem ipsum dolor sit amet, tota semper eos et. Ex summo lobortis eam. Omittam honestatis in sed, cu usu lorem mandamus, eos id elitr constituam. Ad sale rebum melius usu, eos iriure invenire ea. Meis periculis posidonium ne sea."));
         }});
 
         // product #02
         productsCollection.save( new BasicDBObject() {{
             put("_id", UUID.fromString("e2174c61-5ea3-4f54-ac2a-985229dd45da"));
             put("attachments", Arrays.asList(
-                    saveResource(gridFS, "img2.jpg"),
-                    saveResource(gridFS, "img3.jpg"),
-                    saveResource(gridFS, "img1.jpg")
+                    saveResource(gridFS, "public/prod02/DSC_1384.jpg"),
+                    saveResource(gridFS, "public/prod02/DSC_1386.jpg"),
+                    saveResource(gridFS, "public/prod02/DSC_1606.jpg")
             ));
             put("price", new Document("EUR", 20));
             put("title", new BasicDBObject("EN", "Product 2"));
-            put("description", new BasicDBObject("EN", "Description 2"));
+            put("description", new BasicDBObject("EN", "In brute zril vix, nam ad laoreet sadipscing, ad aliquam appetere antiopam his. Ius ullum semper eloquentiam ad, cu solet tincidunt eam, quando principes tincidunt te mel. Ius sapientem interpretaris no. Ius ne brute accusata."));
         }});
 
         // product #03
         productsCollection.save( new BasicDBObject() {{
             put("_id", UUID.fromString("f13aa72e-c728-4593-8a55-f4325d5718b3"));
             put("attachments", Arrays.asList(
-                    saveResource(gridFS, "img3.jpg"),
-                    saveResource(gridFS, "img1.jpg"),
-                    saveResource(gridFS, "img2.jpg")
+                    saveResource(gridFS, "public/prod03/DSC_1678.jpg"),
+                    saveResource(gridFS, "public/prod03/DSC_1614.jpg"),
+                    saveResource(gridFS, "public/prod03/DSC_1632.jpg")
             ));
             put("price", new Document("EUR", 30));
             put("title", new BasicDBObject("EN", "Product 3"));
-            put("description", new BasicDBObject("EN", "Description 3"));
+            put("description", new BasicDBObject("EN", "His ex officiis reprimique honestatis. Est at urbanitas cotidieque theophrastus. His cu porro ludus efficiantur, ut sed oporteat neglegentur. Quot nibh atqui eum ex, verterem quaerendum ad vel, nam rebum principes intellegam no."));
         }});
 
         // product #04
         productsCollection.save( new BasicDBObject() {{
             put("_id", UUID.fromString("e01e088a-bc88-4265-a351-a5bb719c24c3"));
             put("attachments", Arrays.asList(
-                    saveResource(gridFS, "img1.jpg"),
-                    saveResource(gridFS, "img3.jpg"),
-                    saveResource(gridFS, "img2.jpg")
+                    saveResource(gridFS, "public/prod04/800_2137.jpg"),
+                    saveResource(gridFS, "public/prod04/DSC_1376.jpg"),
+                    saveResource(gridFS, "public/prod04/DSC_1610.jpg"),
+                    saveResource(gridFS, "public/prod04/DSC_1644.jpg"),
+                    saveResource(gridFS, "public/prod04/DSC_1645.jpg"),
+                    saveResource(gridFS, "public/prod04/DSC_1653.jpg")
             ));
             put("price", new Document("EUR", 40));
             put("title", new BasicDBObject("EN", "Product 4"));
-            put("description", new BasicDBObject("EN", "Description 4"));
+            put("description", new BasicDBObject("EN", "\n" +
+                    "Nihil nostro equidem sea an. Mei dicam cotidieque delicatissimi te, ei ludus omnesque imperdiet duo. Et usu integre imperdiet. Libris evertitur eos te. Cu his assum alienum suscipiantur, eos eu solum debitis postulant. Et altera alienum sed."));
         }});
     }
 

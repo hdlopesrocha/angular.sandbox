@@ -1,8 +1,11 @@
-<div class="container">
-  <div class="row col-12">
-    <app-checkout-address class="card col-lg-4 col-md-6 col-sm-12"
-                      *ngFor="let address of addresses"
-                      [address]="address">
-    </app-checkout-address>
+<div class="background"
+     [style.backgroundImage]="'url(http://localhost:8080/api/public/file/background_blur.jpg)'">
+  <div class="container">
+    <div class="row col-12">
+      <app-checkout-address class="card col-lg-4 col-md-6 col-sm-12"
+                        *ngFor="let address of addresses"
+                        [address]="address">
+      </app-checkout-address>
+    </div>
   </div>
 </div>

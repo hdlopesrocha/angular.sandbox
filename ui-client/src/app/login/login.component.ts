@@ -22,7 +22,7 @@ export class LoginComponent {
     });
   }
 
-  close(){
+  close() {
     this.modal.hide();
   }
 }

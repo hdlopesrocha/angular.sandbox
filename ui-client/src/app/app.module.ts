@@ -21,6 +21,7 @@ import { HomeComponent } from './home/home.component';
 import {CartService} from './service/cart.service';
 import { CheckoutAddressComponent } from './checkout-address/checkout-address.component';
 import { ProductListComponent } from './product-list/product-list.component';
+import { FullscreenGalleryComponent } from './fullscreen-gallery/fullscreen-gallery.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -42,7 +43,8 @@ const routes: Routes = [
     CheckoutComponent,
     HomeComponent,
     CheckoutAddressComponent,
-    ProductListComponent
+    ProductListComponent,
+    FullscreenGalleryComponent
   ],
   imports: [
     BrowserModule,
@@ -78,6 +80,7 @@ const routes: Routes = [
   entryComponents: [
     LoginComponent,
     RegisterComponent,
+    FullscreenGalleryComponent,
     CarouselComponent,
   ]
 })

@@ -2,6 +2,9 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Cart, Product} from '../api/user';
 import {Api} from '../api/api';
 import {CartService} from '../service/cart.service';
+import {BsModalRef, BsModalService} from 'ngx-bootstrap';
+import {LoginComponent} from '../login/login.component';
+import {FullscreenGalleryComponent} from '../fullscreen-gallery/fullscreen-gallery.component';
 
 @Component({
   selector: 'app-product-card',
@@ -13,8 +16,10 @@ export class ProductCardComponent implements OnInit {
   @Input()
   public product: Product;
   public amount: number;
+  public loginModalRef: BsModalRef;
 
-  constructor(private api: Api, private cartService: CartService) {
+  constructor(private api: Api, private cartService: CartService,
+              public modalService: BsModalService) {
     this.amount = 1;
   }
 
@@ -29,4 +34,18 @@ export class ProductCardComponent implements OnInit {
     });
   }
 
+  toggleFullScreen(product: Product) {
+    const attachments = [];
+    product.attachments.forEach(src => {
+      attachments.push(this.api.host + '/api/public/file/' + src);
+    });
+
+
+    this.loginModalRef = this.modalService.show(FullscreenGalleryComponent, {
+      initialState: {
+        images: attachments
+      }
+    });
+
+  }
 }
