@@ -36,7 +36,13 @@
     "city": "City",
     "country": "Country",
     "phone": "Phone",
-    "comment": "Comment"
+    "comment": "Comment",
+    "save": "Save",
+    "use": "Use address",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "add": "Add new address"
   },
   "user" : {
     "title": "User"

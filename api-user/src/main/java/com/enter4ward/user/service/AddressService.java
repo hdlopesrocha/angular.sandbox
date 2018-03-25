@@ -8,6 +8,7 @@ import com.enter4ward.user.repository.CredentialsRepository;
 import com.enter4ward.user.security.JwtAuthentication;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.aggregation.ArithmeticOperators;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,25 @@ public class AddressService {
     @Autowired
     private CredentialsService credentialsService;
 
-    public List<Address> getAddresses(){
+    public List<Address> getAddresses() {
         return addressRepository.findByOwner(credentialsService.getCurrentEntityId());
+    }
+
+    public Address createAddress(final Address address) {
+        address.setId(UUID.randomUUID());
+        address.setOwner(credentialsService.getCurrentEntityId());
+        return addressRepository.save(address);
+    }
+
+    public Address editAddress(final Address address) {
+        address.setOwner(credentialsService.getCurrentEntityId());
+        return addressRepository.save(address);
+    }
+
+    public void deleteAddress(final UUID uuid) {
+        Address address = addressRepository.findOne(uuid);
+        if (address != null && address.getOwner().equals(credentialsService.getCurrentEntityId())) {
+            addressRepository.delete(address);
+        }
     }
 }

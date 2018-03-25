@@ -20,6 +20,10 @@ public class Address extends Entity {
     private String comment;
     private String phone;
 
+    public Address() {
+        super(null);
+    }
+
     public Address(UUID id) {
         super(id);
     }

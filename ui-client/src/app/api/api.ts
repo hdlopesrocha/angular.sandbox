@@ -1,4 +1,4 @@
-import {AuthenticateViaEmailPassword, Product, RegisterUserViaEmail, Cart, Address} from './user';
+import {AuthenticateViaEmailPassword, Product, RegisterUserViaEmail, Cart, Address, Country} from './user';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
@@ -38,12 +38,25 @@ export class Api {
     return this.http.get<Address[]>(this.host + '/api/address');
   }
 
+  saveAddress(address: Address): Observable<Address> {
+    return this.http.put<Address>(this.host + '/api/address', address);
+  }
+
+  deleteAddress(uuid: string): Observable<Address[]> {
+    return this.http.delete<Address[]>(this.host + '/api/address/'+uuid);
+  }
+
   getProducts(ids: string[]): Observable<Product[]> {
     let params = new HttpParams();
     ids.forEach(id => {
       params = params.append('id', id);
     });
     return this.http.get<Product[]>(this.host + '/api/public/product', {params: params});
+  }
+
+  getCountries(): Country[] {
+    // TODO: iterate all countries
+    return [Country.FR, Country.BE, Country.CH, Country.GB];
   }
 
   getCart(fallback: Cart): Observable<Cart> {

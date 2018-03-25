@@ -17,7 +17,7 @@ public class JwtValidator {
     private Long expiration;
 
 
-    public JwtUser read(String token) {
+    public JwtUser read(final String token) {
         try {
             DefaultClaims jwt = (DefaultClaims) Jwts.parser()
                     .setSigningKey(secret)
@@ -30,7 +30,7 @@ public class JwtValidator {
         }
     }
 
-    public String write(JwtUser user) {
+    public String write(final JwtUser user) {
         Date now = new Date();
         return Jwts.builder()
                 .setIssuedAt(now)
@@ -40,7 +40,7 @@ public class JwtValidator {
                 .compact();
     }
 
-    private Date calculateExpirationDate(Date createdDate) {
+    private Date calculateExpirationDate(final Date createdDate) {
         return new Date(createdDate.getTime() + expiration * 1000);
     }
 }

@@ -1,31 +1,55 @@
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <label>{{"address.addressLine1" | translate}}: </label>
+      <input type="text" [(ngModel)]="address.addressLine1" class="form-control" [disabled]="!address.edit"/>
+    </div>
+    <div class="row">
+      <label>{{"address.addressLine2" | translate}}: </label>
+      <input type="text" [(ngModel)]="address.addressLine2" class="form-control" [disabled]="!address.edit"/>
+    </div>
+    <div class="row">
+      <label>{{"address.postalCode" | translate}}: </label>
+      <input type="text" [(ngModel)]="address.postalCode" class="form-control" [disabled]="!address.edit"/>
+    </div>
+    <div class="row">
+      <label>{{"address.city" | translate}}: </label>
+      <input type="text" [(ngModel)]="address.city" class="form-control" [disabled]="!address.edit"/>
+    </div>
+    <div class="row">
+      <label>{{"address.country" | translate}}: </label>
 
-<div class="card-body">
-  <div class="row">
-    <b>{{"address.addressLine1" | translate}}: </b>
-    {{ address.addressLine1 }}
+      <select [(ngModel)]="address.country"
+              [disabled]="!address.edit"
+              class="form-control" id="sel1">
+        <option *ngFor="let country of countries" value="{{country}}">{{"country."+ country | translate}}</option>
+      </select>
+    </div>
+    <div class="row">
+      <label>{{"address.phone" | translate}}: </label>
+      <input type="text" [(ngModel)]="address.phone" class="form-control" [disabled]="!address.edit"/>
+    </div>
+    <div class="row">
+      <label>{{"address.comment" | translate}}: </label>
+      <input type="text" [(ngModel)]="address.comment" class="form-control" [disabled]="!address.edit"/>
+    </div>
   </div>
-  <div class="row">
-    <b>{{"address.addressLine2" | translate}}: </b>
-    {{ address.addressLine2 }}
-  </div>
-  <div class="row">
-    <b>{{"address.postalCode" | translate}}: </b>
-    {{ address.postalCode }}
-  </div>
-  <div class="row">
-    <b>{{"address.city" | translate}}: </b>
-    {{ address.city }}
-  </div>
-  <div class="row">
-    <b>{{"address.country" | translate}}: </b>
-    {{"country." + address.country | translate }}
-  </div>
-  <div class="row">
-    <b>{{"address.phone" | translate}}: </b>
-    {{ address.phone }}
-  </div>
-  <div class="row">
-    <b>{{"address.comment" | translate}}: </b>
-    {{ address.comment }}
+  <div class="card-footer">
+    <div *ngIf="!address.edit">
+      <button type="button" class="btn btn-info" (click)="editAddress()">
+        <fa name="edit"></fa>{{'address.edit' | translate}}
+      </button>
+      <button type="button" class="btn btn-success" (click)="useAddress()">
+        <fa name="check"></fa>{{'address.use' | translate}}
+      </button>
+    </div>
+    <div *ngIf="address.edit">
+      <button type="button" class="btn btn-danger" (click)="deleteAddress()">
+        <fa name="trash"></fa>{{'address.delete' | translate}}
+      </button>
+      <button type="button" class="btn btn-success" (click)="saveAddress()">
+        <fa name="save"></fa>{{'address.save' | translate}}
+      </button>
+    </div>
   </div>
 </div>
