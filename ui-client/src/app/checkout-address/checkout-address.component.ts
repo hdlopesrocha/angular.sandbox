@@ -1,7 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {EditableAddress} from "../checkout/checkout.component";
-import {Api} from "../api/api";
-import {Address, Country} from "../api/user";
+import {Api} from "../service/api.service";
+import {Bill, Country, Currency} from "../api/user";
+import {CartService} from "../service/cart.service";
 
 @Component({
   selector: 'app-checkout-address',
@@ -16,7 +17,7 @@ export class CheckoutAddressComponent implements OnInit {
   private deleteAddressEvent = new EventEmitter<EditableAddress>();
   private countries: Country[];
 
-  constructor(private api: Api) {
+  constructor(private api: Api, private cartService: CartService) {
   }
 
   ngOnInit() {
@@ -40,7 +41,14 @@ export class CheckoutAddressComponent implements OnInit {
   }
 
   useAddress() {
+    const bill = new Bill();
+    bill.address = this.address;
+    bill.currency = Currency.EUR;
+    bill.cart = this.cartService.getLocalCart();
 
+    this.api.createBill(bill).subscribe(() => {
+      console.log("BILL OK!");
+    });
   }
 
   editAddress() {

@@ -11,8 +11,8 @@ public class Product extends Entity {
     private Map<Lang,String> title;
     private Map<Lang,String> description;
 
-    public Product(final UUID id) {
-        super(id);
+    public Product() {
+        super();
     }
 
     public List<String> getAttachments() {

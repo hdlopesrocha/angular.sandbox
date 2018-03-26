@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Api} from './api/api';
+import {Api} from './service/api.service';
 import {BsModalRef, BsModalService} from 'ngx-bootstrap';
 import {LoginComponent} from './login/login.component';
 import {RegisterComponent} from './register/register.component';

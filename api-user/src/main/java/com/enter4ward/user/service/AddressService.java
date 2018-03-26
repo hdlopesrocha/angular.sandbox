@@ -33,13 +33,7 @@ public class AddressService {
         return addressRepository.findByOwner(credentialsService.getCurrentEntityId());
     }
 
-    public Address createAddress(final Address address) {
-        address.setId(UUID.randomUUID());
-        address.setOwner(credentialsService.getCurrentEntityId());
-        return addressRepository.save(address);
-    }
-
-    public Address editAddress(final Address address) {
+    public Address setAddress(final Address address) {
         address.setOwner(credentialsService.getCurrentEntityId());
         return addressRepository.save(address);
     }

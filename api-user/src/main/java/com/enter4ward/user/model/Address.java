@@ -21,11 +21,7 @@ public class Address extends Entity {
     private String phone;
 
     public Address() {
-        super(null);
-    }
-
-    public Address(UUID id) {
-        super(id);
+        super();
     }
 
     public UUID getOwner() {

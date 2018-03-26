@@ -2,7 +2,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {AppComponent} from './app.component';
-import {Api} from './api/api';
+import {Api} from './service/api.service';
 import {RegisterComponent} from './register/register.component';
 import {LoginComponent} from './login/login.component';
 import {FormsModule} from '@angular/forms';

@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Cart, Product} from '../api/user';
-import {Api} from '../api/api';
+import {Api} from '../service/api.service';
 import {CartService} from '../service/cart.service';
 import {BsModalRef, BsModalService} from 'ngx-bootstrap';
 import {LoginComponent} from '../login/login.component';

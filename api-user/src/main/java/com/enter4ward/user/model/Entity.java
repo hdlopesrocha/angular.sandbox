@@ -9,8 +9,8 @@ public abstract class Entity {
     @Id
     private UUID id;
 
-    public Entity(final UUID id) {
-        this.id = id;
+    public Entity() {
+        this.id = UUID.randomUUID();
     }
 
     public UUID getId() {

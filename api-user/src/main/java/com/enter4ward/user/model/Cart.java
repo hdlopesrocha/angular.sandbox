@@ -6,14 +6,10 @@ import java.util.UUID;
 
 public class Cart extends Entity {
 
-    private Map<UUID,Integer> amounts = new TreeMap<>();
+    private Map<UUID, Integer> amounts = new TreeMap<>();
 
     public Cart() {
-        super(null);
-    }
-
-    public Cart(final UUID id) {
-        super(id);
+        super();
     }
 
     public Map<UUID, Integer> getAmounts() {

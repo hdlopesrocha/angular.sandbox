@@ -1,9 +1,9 @@
-import {AuthenticateViaEmailPassword, Product, RegisterUserViaEmail, Cart, Address, Country} from './user';
+import {AuthenticateViaEmailPassword, Product, RegisterUserViaEmail, Cart, Address, Country, Bill} from '../api/user';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {Observable} from 'rxjs/Observable';
-import {CommandResult} from './common';
+import {CommandResult} from "../api/common";
 
 @NgModule({
   imports: [
@@ -69,5 +69,8 @@ export class Api {
     this.http.post(this.host + '/api/public/cart', cart).subscribe(() => {});
   }
 
+  createBill(bill: Bill) {
+    return this.http.put(this.host + '/api/bill', bill);
+  }
 
 }

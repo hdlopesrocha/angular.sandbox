@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Api} from '../api/api';
+import {Api} from '../service/api.service';
 import {Address} from '../api/user';
 
 export class EditableAddress extends Address{

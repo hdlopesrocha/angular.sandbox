@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Api} from '../api/api';
+import {Api} from '../service/api.service';
 
 @Component({
   selector: 'app-fullscreen-gallery',

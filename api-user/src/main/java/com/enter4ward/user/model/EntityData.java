@@ -7,8 +7,8 @@ public class EntityData extends Entity {
 
     private Map<String, Object> data;
 
-    public EntityData(final UUID id, final Map<String, Object> data) {
-        super(id);
+    public EntityData(final Map<String, Object> data) {
+        super();
         this.data = data;
     }
 

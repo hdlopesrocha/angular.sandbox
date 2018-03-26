@@ -12,8 +12,8 @@ public class Credentials extends Entity {
 
     private Map<String, Object> data = new TreeMap<>();
 
-    public Credentials(final UUID id, final  UUID owner) {
-        super(id);
+    public Credentials(final  UUID owner) {
+        super();
         this.owner = owner;
     }
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Product} from '../api/user';
-import {Api} from '../api/api';
+import {Api} from '../service/api.service';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({

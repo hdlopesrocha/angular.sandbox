@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import { AuthenticateViaEmailPassword} from '../api/user';
-import { Api } from '../api/api';
+import { Api } from '../service/api.service';
 import {BsModalRef} from 'ngx-bootstrap';
 
 @Component({

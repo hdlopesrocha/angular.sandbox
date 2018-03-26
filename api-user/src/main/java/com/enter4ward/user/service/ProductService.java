@@ -30,7 +30,7 @@ public class ProductService {
             return null;
         } else {
             Cart cart = cartRepository.findOne(entityId);
-            return cart != null ? cart : new Cart(entityId);
+            return cart != null ? cart : new Cart();
         }
     }
 

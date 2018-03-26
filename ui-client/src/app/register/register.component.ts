@@ -1,6 +1,6 @@
 import {Component, ElementRef, QueryList, Renderer2, ViewChildren, ViewContainerRef} from '@angular/core';
 import {RegisterUserViaEmail} from '../api/user';
-import {Api} from '../api/api';
+import {Api} from '../service/api.service';
 import {BsModalRef, TooltipConfig, TooltipDirective} from 'ngx-bootstrap';
 import {ComponentLoaderFactory} from 'ngx-bootstrap/component-loader/component-loader.factory';
 import {TranslateService} from '@ngx-translate/core';

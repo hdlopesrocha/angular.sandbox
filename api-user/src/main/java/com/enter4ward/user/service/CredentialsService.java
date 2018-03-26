@@ -37,7 +37,7 @@ public class CredentialsService {
         byte[] hash = getHash(salt, password.getBytes(StandardCharsets.UTF_8));
         String activation = RandomStringUtils.randomAlphanumeric(32);
 
-        Credentials credentials = new Credentials(UUID.randomUUID(), owner);
+        Credentials credentials = new Credentials(owner);
         credentials.getData().put("email", email);
         credentials.getData().put("salt", salt);
         credentials.getData().put("hash", hash);

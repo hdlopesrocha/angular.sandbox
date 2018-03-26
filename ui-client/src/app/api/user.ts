@@ -1,4 +1,4 @@
-// Generated using typescript-generator version 2.1.406 on 2018-03-21 23:37:42.
+// Generated using typescript-generator version 2.1.406 on 2018-03-27 00:18:08.
 
 export class Command {
 }
@@ -30,6 +30,28 @@ export class Address extends Entity {
     phone: string;
 }
 
+export class Bill extends Entity {
+    address: Address;
+    owner: string;
+    state: BillState;
+    billHistory: BillStateHistory[];
+    trackingNumber: string;
+    currency: Currency;
+    cart: Cart;
+    prices: { [index: string]: number };
+}
+
+export class BillItem {
+    productId: string;
+    price: number;
+    amount: number;
+}
+
+export class BillStateHistory {
+    state: BillState;
+    date: Date;
+}
+
 export class Cart extends Entity {
     amounts: { [index: string]: number };
 }
@@ -46,6 +68,7 @@ export class EntityData extends Entity {
 
 export class Membership extends Entity {
     to: string;
+    from: string;
 }
 
 export class Product extends Entity {
@@ -53,6 +76,15 @@ export class Product extends Entity {
     price: { [index: string]: number };
     title: { [index: string]: string };
     description: { [index: string]: string };
+}
+
+export enum BillState {
+    CREATED = "CREATED",
+    CONFIRMED = "CONFIRMED",
+    PAID = "PAID",
+    SENT = "SENT",
+    FINISHED = "FINISHED",
+    DELETED = "DELETED",
 }
 
 export enum Country {
