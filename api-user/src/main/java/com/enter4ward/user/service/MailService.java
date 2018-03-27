@@ -22,16 +22,14 @@ public class MailService {
     @Autowired
     private TemplateEngine templateEngine;
 
-
     public void sendSimpleMessage(String to, String subject, String text){
-
-
         MimeMessage message = mailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message);
         try {
-            helper.addTo(to);
-            helper.setSubject(subject);
-            helper.setText(text);
+            new MimeMessageHelper(message) {{
+                addTo(to);
+                setSubject(subject);
+                setText(text);
+            }};
             mailSender.send(message);
         } catch (MessagingException e) {
             e.printStackTrace();
@@ -43,32 +41,29 @@ public class MailService {
                                 String templateName,
                                 Map<String,String> params,
                                 Map<String, String> files){
-
         MimeMessage message = mailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message);
         try {
-            helper.addTo(to);
-            helper.setSubject(subject);
-
-            Context context = new Context();
-            if(params != null) {
-                params.entrySet().forEach(it -> context.setVariable(it.getKey(), it.getValue()));
-            }
-            helper.setText(templateEngine.process(templateName, context), true);
-
-            if(files != null) {
-                for (Map.Entry<String, String> entry : files.entrySet()) {
-                    FileSystemResource file = new FileSystemResource(new File(entry.getValue()));
-                    helper.addAttachment(entry.getKey(), file);
+            new MimeMessageHelper(message){{
+                addTo(to);
+                setSubject(subject);
+                Context context = new Context();
+                if(params != null) {
+                    params.entrySet().forEach(it -> context.setVariable(it.getKey(), it.getValue()));
                 }
-            }
+                setText(templateEngine.process(templateName, context), true);
+                if(files != null) {
+                    for (Map.Entry<String, String> entry : files.entrySet()) {
+                        FileSystemResource file = new FileSystemResource(new File(entry.getValue()));
+                        addAttachment(entry.getKey(), file);
+                    }
+                }
+            }};
 
             mailSender.send(message);
         } catch (MessagingException e) {
             e.printStackTrace();
         }
     }
-
 
     public void sendMessageWithAttachment(String to,
                                           String subject,
@@ -77,17 +72,15 @@ public class MailService {
         try {
             MimeMessage message = mailSender.createMimeMessage();
             // pass 'true' to the constructor to create a multipart message
-            MimeMessageHelper helper = new MimeMessageHelper(message, true);
-
-            helper.setTo(to);
-            helper.setSubject(subject);
-            helper.setText(text);
-
-            for(Map.Entry<String, String> entry : paths.entrySet()){
-                FileSystemResource file = new FileSystemResource(new File(entry.getValue()));
-                helper.addAttachment(entry.getKey(), file);
-            }
-
+            new MimeMessageHelper(message, true){{
+                setTo(to);
+                setSubject(subject);
+                setText(text);
+                for(Map.Entry<String, String> entry : paths.entrySet()){
+                    FileSystemResource file = new FileSystemResource(new File(entry.getValue()));
+                    addAttachment(entry.getKey(), file);
+                }
+            }};
             mailSender.send(message);
         } catch (MessagingException e) {
             e.printStackTrace();

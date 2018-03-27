@@ -1,5 +1,6 @@
 package com.enter4ward.user.service;
 
+import com.enter4ward.user.command.SaveAddressCommand;
 import com.enter4ward.user.model.Address;
 import com.enter4ward.user.model.Credentials;
 import com.enter4ward.user.model.CredentialsType;
@@ -33,9 +34,9 @@ public class AddressService {
         return addressRepository.findByOwner(credentialsService.getCurrentEntityId());
     }
 
-    public Address setAddress(final Address address) {
-        address.setOwner(credentialsService.getCurrentEntityId());
-        return addressRepository.save(address);
+    public Address setAddress(final SaveAddressCommand command) {
+        command.getAddress().setOwner(credentialsService.getCurrentEntityId());
+        return addressRepository.save(command.getAddress());
     }
 
     public void deleteAddress(final UUID uuid) {

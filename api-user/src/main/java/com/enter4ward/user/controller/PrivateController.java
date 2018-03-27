@@ -1,11 +1,16 @@
 package com.enter4ward.user.controller;
 
 
+import com.enter4ward.user.command.CreateOrderCommand;
+import com.enter4ward.user.command.SaveAddressCommand;
+import com.enter4ward.user.command.SaveCartCommand;
 import com.enter4ward.user.model.Address;
-import com.enter4ward.user.model.Bill;
+import com.enter4ward.user.model.Cart;
+import com.enter4ward.user.repository.EntityDataRepository;
 import com.enter4ward.user.service.AddressService;
-import com.enter4ward.user.service.BillService;
 import com.enter4ward.user.service.CredentialsService;
+import com.enter4ward.user.service.OrderService;
+import com.enter4ward.user.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -23,8 +28,11 @@ public class PrivateController {
     @Autowired
     private AddressService addressService;
     @Autowired
-    private BillService billService;
-
+    private OrderService orderService;
+    @Autowired
+    private CredentialsService credentialsService;
+    @Autowired
+    private ProductService productService;
 
     @RequestMapping(value = "/address", method = RequestMethod.GET)
     public List<Address> getAddresses(){
@@ -32,8 +40,8 @@ public class PrivateController {
     }
 
     @RequestMapping(value = "/address", method = RequestMethod.PUT)
-    public Address saveAddress(@RequestBody Address address) {
-        return addressService.setAddress(address);
+    public Address saveAddress(@RequestBody SaveAddressCommand command) {
+        return addressService.setAddress(command);
     }
 
     @RequestMapping(value = "/address/{uuid}", method = RequestMethod.DELETE)
@@ -41,8 +49,22 @@ public class PrivateController {
         addressService.deleteAddress(uuid);
     }
 
-    @RequestMapping(value = "/bill", method = RequestMethod.PUT)
-    public void createBill(@RequestBody final Bill bill) {
-        billService.createBill(bill);
+    @RequestMapping(value = "/order", method = RequestMethod.PUT)
+    public void createOrder(@RequestBody final CreateOrderCommand command) {
+        orderService.createOrder(command);
+    }
+
+    @RequestMapping(value = "/cart", method = RequestMethod.GET)
+    public Cart getCart() {
+        return productService.getCart(credentialsService.getCurrentEntityId());
+    }
+
+    @RequestMapping(value = "/cart", method = RequestMethod.POST)
+    public void setCart(@RequestBody SaveCartCommand command) {
+        UUID currentEntity = credentialsService.getCurrentEntityId();
+        if(command.getCart() != null && currentEntity != null) {
+            command.getCart().setId(currentEntity);
+            productService.setCart(command.getCart());
+        }
     }
 }

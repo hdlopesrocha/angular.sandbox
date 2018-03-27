@@ -1,18 +1,32 @@
-// Generated using typescript-generator version 2.1.406 on 2018-03-27 00:18:08.
+// Generated using typescript-generator version 2.1.406 on 2018-03-27 21:06:20.
 
 export class Command {
 }
 
-export class AuthenticateViaEmailPassword extends Command {
+export class AuthenticateViaEmailPasswordCommand extends Command {
     email: string;
     password: string;
 }
 
-export class RegisterUserViaEmail extends Command {
+export class CreateOrderCommand extends Command {
+    address: Address;
+    currency: Currency;
+    cart: Cart;
+}
+
+export class RegisterUserViaEmailCommand extends Command {
     email: string;
     confirmEmail: string;
     password: string;
     confirmPassword: string;
+}
+
+export class SaveAddressCommand extends Command {
+    address: Address;
+}
+
+export class SaveCartCommand extends Command {
+    cart: Cart;
 }
 
 export class Entity {
@@ -28,28 +42,6 @@ export class Address extends Entity {
     addressLine2: string;
     comment: string;
     phone: string;
-}
-
-export class Bill extends Entity {
-    address: Address;
-    owner: string;
-    state: BillState;
-    billHistory: BillStateHistory[];
-    trackingNumber: string;
-    currency: Currency;
-    cart: Cart;
-    prices: { [index: string]: number };
-}
-
-export class BillItem {
-    productId: string;
-    price: number;
-    amount: number;
-}
-
-export class BillStateHistory {
-    state: BillState;
-    date: Date;
 }
 
 export class Cart extends Entity {
@@ -76,15 +68,6 @@ export class Product extends Entity {
     price: { [index: string]: number };
     title: { [index: string]: string };
     description: { [index: string]: string };
-}
-
-export enum BillState {
-    CREATED = "CREATED",
-    CONFIRMED = "CONFIRMED",
-    PAID = "PAID",
-    SENT = "SENT",
-    FINISHED = "FINISHED",
-    DELETED = "DELETED",
 }
 
 export enum Country {

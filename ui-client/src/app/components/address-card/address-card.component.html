@@ -1,0 +1,49 @@
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <fa name="address-card"></fa>
+      <div class="col-12">
+        {{address.addressLine1}}
+      </div>
+      <div class="col-12">
+        {{address.addressLine2}}
+      </div>
+      <div class="col-12">
+        {{address.postalCode}} - {{address.city}}
+      </div>
+      <div class="col-12">
+        {{('country.' + address.country) | translate}}
+      </div>
+    </div>
+    <div class="row">
+      <fa name="phone"></fa>
+      <div class="col-12">{{address.phone}}</div>
+    </div>
+    <div class="row">
+      <fa name="comment"></fa>
+      <div class="col-12">{{address.comment}}</div>
+    </div>
+  </div>
+  <div class="card-footer">
+    <div *ngIf="!address.edit">
+      <button type="button" class="btn btn-info" (click)="editAddress()">
+        <fa name="edit"></fa>
+        {{'address.edit' | translate}}
+      </button>
+      <button type="button" class="btn btn-success" (click)="useAddress()">
+        <fa name="check"></fa>
+        {{'address.use' | translate}}
+      </button>
+    </div>
+    <div *ngIf="address.edit">
+      <button type="button" class="btn btn-danger" (click)="deleteAddress()">
+        <fa name="trash"></fa>
+        {{'address.delete' | translate}}
+      </button>
+      <button type="button" class="btn btn-success" (click)="saveAddress()">
+        <fa name="save"></fa>
+        {{'address.save' | translate}}
+      </button>
+    </div>
+  </div>
+</div>

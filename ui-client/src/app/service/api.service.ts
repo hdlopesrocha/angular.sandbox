@@ -1,4 +1,7 @@
-import {AuthenticateViaEmailPassword, Product, RegisterUserViaEmail, Cart, Address, Country, Bill} from '../api/user';
+import {
+  AuthenticateViaEmailPasswordCommand, Product, RegisterUserViaEmailCommand, Cart, Address, Country,
+  CreateOrderCommand, SaveAddressCommand, SaveCartCommand
+} from '../api/user';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
@@ -26,11 +29,19 @@ export class Api {
     localStorage.setItem('token', token);
   }
 
-  auth(command: AuthenticateViaEmailPassword): Observable<CommandResult<string>> {
+  isLoggedIn(): boolean {
+    return localStorage.getItem('token') != null;
+  }
+
+  logout() {
+    localStorage.removeItem('token');
+  }
+
+  auth(command: AuthenticateViaEmailPasswordCommand): Observable<CommandResult<string>> {
     return this.http.post<CommandResult<string>>(this.host + '/api/public/auth', command);
   }
 
-  register(command: RegisterUserViaEmail): Observable<CommandResult<boolean>> {
+  register(command: RegisterUserViaEmailCommand): Observable<CommandResult<boolean>> {
     return this.http.put<CommandResult<boolean>>(this.host + '/api/public/register', command);
   }
 
@@ -38,8 +49,8 @@ export class Api {
     return this.http.get<Address[]>(this.host + '/api/address');
   }
 
-  saveAddress(address: Address): Observable<Address> {
-    return this.http.put<Address>(this.host + '/api/address', address);
+  saveAddress(command: SaveAddressCommand): Observable<Address> {
+    return this.http.put<Address>(this.host + '/api/address', command);
   }
 
   deleteAddress(uuid: string): Observable<Address[]> {
@@ -59,18 +70,15 @@ export class Api {
     return [Country.FR, Country.BE, Country.CH, Country.GB];
   }
 
-  getCart(fallback: Cart): Observable<Cart> {
-    return this.http.get<Cart>(this.host + '/api/public/cart').map(cart => {
-      return cart ? cart : fallback;
-    });
+  getCart(): Observable<Cart> {
+    return this.http.get<Cart>(this.host + '/api/cart');
   }
 
-  setCart(cart: Cart) {
-    this.http.post(this.host + '/api/public/cart', cart).subscribe(() => {});
+  setCart(command: SaveCartCommand) {
+    this.http.post(this.host + '/api/cart', command).subscribe(() => {});
   }
 
-  createBill(bill: Bill) {
-    return this.http.put(this.host + '/api/bill', bill);
+  createOrder(command: CreateOrderCommand) {
+    return this.http.put(this.host + '/api/order', command);
   }
-
 }

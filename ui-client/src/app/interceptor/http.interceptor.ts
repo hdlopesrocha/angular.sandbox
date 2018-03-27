@@ -26,8 +26,11 @@ export class MyHttpInterceptor implements HttpInterceptor {
       }
     }, (error: any) => {
       if (error instanceof HttpErrorResponse) {
-        console.error('ERROR_API', request, error);
         if (error.status === 401) {
+
+        }
+        else {
+          console.error('ERROR_API', request, error);
         }
       }
     });

@@ -3,12 +3,10 @@ package com.enter4ward.user.controller;
 
 import com.enter4ward.common.commands.CommandResult;
 import com.enter4ward.common.commands.Error;
-import com.enter4ward.user.command.AuthenticateViaEmailPassword;
-import com.enter4ward.user.command.RegisterUserViaEmail;
-import com.enter4ward.user.model.Cart;
+import com.enter4ward.user.command.AuthenticateViaEmailPasswordCommand;
+import com.enter4ward.user.command.RegisterUserViaEmailCommand;
 import com.enter4ward.user.model.Credentials;
 import com.enter4ward.user.model.Product;
-import com.enter4ward.user.repository.EntityDataRepository;
 import com.enter4ward.user.security.JwtUser;
 import com.enter4ward.user.security.JwtValidator;
 import com.enter4ward.user.service.CredentialsService;
@@ -19,8 +17,6 @@ import com.mongodb.DBObject;
 import com.mongodb.gridfs.GridFS;
 import com.mongodb.gridfs.GridFSDBFile;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
-import org.bson.Document;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -31,7 +27,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 import java.util.UUID;
 
@@ -42,21 +37,15 @@ public class PublicController {
 
     @Autowired
     private MongoTemplate database;
-
-    @Autowired
-    private EntityDataRepository entityDataRepository;
-
     @Autowired
     private CredentialsService credentialsService;
-
     @Autowired
     private ProductService productService;
-
     @Autowired
     private JwtValidator validator;
 
     @RequestMapping(value = "/auth", method = RequestMethod.POST)
-    public CommandResult<String> authenticate(@RequestBody final AuthenticateViaEmailPassword command) {
+    public CommandResult<String> authenticate(@RequestBody final AuthenticateViaEmailPasswordCommand command) {
         CommandResult<String> result = new CommandResult<>();
         try {
             UUID entityId = credentialsService.authenticateWithEmail(command.getEmail(), command.getPassword());
@@ -85,7 +74,7 @@ public class PublicController {
 
     @RequestMapping(value = "/register", method = RequestMethod.PUT)
     public CommandResult<Boolean> register(HttpServletRequest request,
-                                           @RequestBody final RegisterUserViaEmail command) {
+                                           @RequestBody final RegisterUserViaEmailCommand command) {
         CommandResult<Boolean> result = new CommandResult<>();
         if (StringUtils.isEmpty(command.getConfirmEmail())) {
             result.getErrors().put("confirmEmail", new Error("empty"));
@@ -129,21 +118,6 @@ public class PublicController {
     @RequestMapping(value = "/product", method = RequestMethod.GET)
     public Iterable<Product> getProducts(@RequestParam(required = false) List<UUID> id) {
         return productService.getProducts(id);
-    }
-
-    @RequestMapping(value = "/cart", method = RequestMethod.GET)
-    public Cart getCart() {
-        return productService.getCart(credentialsService.getCurrentEntityId());
-    }
-
-
-    @RequestMapping(value = "/cart", method = RequestMethod.POST)
-    public void setCart(@RequestBody Cart cart) {
-        UUID currentEntity = credentialsService.getCurrentEntityId();
-        if(cart != null && currentEntity != null) {
-            cart.setId(currentEntity);
-            productService.setCart(cart);
-        }
     }
 
     @RequestMapping(value = "/file/{id:.+}", method = RequestMethod.GET)

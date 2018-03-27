@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Api} from './service/api.service';
 import {BsModalRef, BsModalService} from 'ngx-bootstrap';
-import {LoginComponent} from './login/login.component';
-import {RegisterComponent} from './register/register.component';
+import {LoginModalComponent} from './components/login-modal/login-modal.component';
+import {RegisterModalComponent} from './components/register-modal/register-modal.component';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({
@@ -25,14 +25,21 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-
   }
 
   openLoginModal() {
-    this.loginModalRef = this.modalService.show(LoginComponent);
+    this.loginModalRef = this.modalService.show(LoginModalComponent);
   }
 
   openRegisterModal() {
-    this.registerModalRef = this.modalService.show(RegisterComponent);
+    this.registerModalRef = this.modalService.show(RegisterModalComponent);
+  }
+
+  isLoggedIn(){
+    return this.api.isLoggedIn();
+  }
+
+  logout() {
+    this.api.logout();
   }
 }

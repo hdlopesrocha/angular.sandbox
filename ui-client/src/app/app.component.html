@@ -1,62 +1,39 @@
 <!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="myNavbar">
   <div class="container">
     <a class="navbar-brand" [routerLink]="['/home']">{{"ui.logoText" | translate}}</a>
-
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
             aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+
+
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <button type="button"
-                  class="btn btn-default btn-secondary"
-                  [popover]="cartTemplate"
-                  [outsideClick]="true"
-                  placement="bottom">
-            <fa name="shopping-cart"></fa>
+        <div class="btn-group" dropdown>
+          <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle">
+            <fa name="shopping-cart"></fa><span class="caret"></span>
           </button>
-        </li>
-        <li class="nav-item">
-          <button type="button"
-                  class="btn btn-default btn-secondary"
-                  [popover]="userTemplate"
-                  [outsideClick]="true"
-                  popoverTitle="{{'user.title' | translate}}"
-                  placement="bottom">
-            <fa name="user"></fa>
+          <div *dropdownMenu class="dropdown-menu cart" style="width: 300px" role="menu">
+              <app-cart-popover>
+              </app-cart-popover>
+          </div>
+        </div>
+        <div class="btn-group" dropdown>
+          <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle">
+            <fa name="user"></fa><span class="caret"></span>
           </button>
+          <ul *dropdownMenu class="dropdown-menu" role="menu">
+            <li role="menuitem" *ngIf="isLoggedIn()"><a class="dropdown-item" (click)="openLoginModal()">Addresses</a></li>
+            <li role="menuitem" *ngIf="!isLoggedIn()"><a class="dropdown-item" (click)="openRegisterModal()">Register</a></li>
+            <li role="menuitem" *ngIf="!isLoggedIn()"><a class="dropdown-item" (click)="openLoginModal()">Login</a></li>
+            <li class="divider dropdown-divider" *ngIf="isLoggedIn()"></li>
+            <li role="menuitem" *ngIf="isLoggedIn()"><a class="dropdown-item" (click)="logout()">Logout</a></li>
+          </ul>
+        </div>
       </ul>
     </div>
   </div>
 </nav>
 
-<!-- Page Content -->
-  <router-outlet></router-outlet>
-
-<ng-template #cartTemplate>
-  <app-cart-popover>
-  </app-cart-popover>
-</ng-template>
-
-
-<ng-template #userTemplate>
-  <div class="container">
-
-  <div class="row col-12">
-    <button type="button"
-            class="btn btn-primary"
-            (click)="openRegisterModal()">
-      Register
-    </button>
-  </div>
-    <div class="row col-12">
-    <button type="button"
-            class="btn btn-primary"
-            (click)="openLoginModal()">
-      Login
-    </button>
-  </div>
-  </div>
-</ng-template>
+<router-outlet></router-outlet>
