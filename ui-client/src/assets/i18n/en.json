@@ -42,7 +42,8 @@
     "cancel": "Cancel",
     "edit": "Edit Address",
     "delete": "Delete",
-    "add": "Add new address"
+    "add": "Add new address",
+    "addDescription": "Your address is not here?"
   },
   "user" : {
     "title": "User"

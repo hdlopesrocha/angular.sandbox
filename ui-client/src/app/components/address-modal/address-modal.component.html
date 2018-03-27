@@ -39,13 +39,17 @@
 </div>
 <div class="modal-footer">
   <button type="button"
+          class="btn btn-danger"
+          (click)="delete()"><fa name="trash"></fa>{{"address.delete" | translate}}
+  </button>
+  <button type="button"
           class="btn btn-secondary"
-          (click)="close()">Close
+          (click)="close()"><fa name="times"></fa>{{"address.cancel" | translate}}
   </button>
   <button type="button"
           ng-disabled="submit.$invalid"
-          class="btn btn-primary"
-          (click)="submit()">Submit
+          class="btn btn-success"
+          (click)="submit()"><fa name="save"></fa>{{"address.save" | translate}}
   </button>
 </div>
 

@@ -34,4 +34,14 @@ export class AddressModalComponent implements OnInit {
       this.addressChanged.emit(true);
     });
   }
+
+  delete() {
+    if (this.address.id) {
+      this.api.deleteAddress(this.address.id).subscribe(() => {
+        this.close();
+        this.addressChanged.emit(true);
+      });
+    }
+  }
+
 }

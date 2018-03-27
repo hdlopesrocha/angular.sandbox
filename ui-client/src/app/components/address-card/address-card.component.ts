@@ -28,16 +28,6 @@ export class CheckoutAddressComponent implements OnInit {
   ngOnInit() {
   }
 
-  deleteAddress() {
-    if (this.address.id) {
-      this.api.deleteAddress(this.address.id).subscribe(() => {
-        this.deleteAddressEvent.emit(this.address);
-      });
-    } else {
-      this.deleteAddressEvent.emit(this.address);
-    }
-  }
-
   useAddress() {
     const command = new CreateOrderCommand();
     command.address = this.address;
