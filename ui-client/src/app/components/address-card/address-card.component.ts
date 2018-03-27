@@ -14,9 +14,13 @@ export class CheckoutAddressComponent implements OnInit {
 
   @Input()
   public address: Address;
+  @Input()
+  public selectable: boolean;
   @Output()
   private deleteAddressEvent = new EventEmitter<Address>();
   private addressModalRef: BsModalRef;
+  @Input()
+  private addressChanged: EventEmitter<boolean>;
 
   constructor(private api: Api, private cartService: CartService, public modalService: BsModalService) {
   }
@@ -48,7 +52,8 @@ export class CheckoutAddressComponent implements OnInit {
   editAddress() {
     this.addressModalRef = this.modalService.show(AddressModalComponent, {
       initialState: {
-        address:  Object.assign({}, this.address)
+        address:  Object.assign({}, this.address),
+        addressChanged: this.addressChanged
       }
     });
   }

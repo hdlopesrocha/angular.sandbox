@@ -30,7 +30,7 @@
         <fa name="edit"></fa>
         {{'address.edit' | translate}}
       </button>
-      <button type="button" class="btn btn-success" (click)="useAddress()">
+      <button *ngIf="selectable" type="button" class="btn btn-success" (click)="useAddress()">
         <fa name="check"></fa>
         {{'address.use' | translate}}
       </button>

@@ -24,7 +24,9 @@
             <fa name="user"></fa><span class="caret"></span>
           </button>
           <ul *dropdownMenu class="dropdown-menu" role="menu">
-            <li role="menuitem" *ngIf="isLoggedIn()"><a class="dropdown-item" (click)="openLoginModal()">Addresses</a></li>
+            <li role="menuitem" *ngIf="isLoggedIn()"><a class="dropdown-item" [routerLink]="['/addresses']">Addresses</a></li>
+            <li role="menuitem" *ngIf="isLoggedIn()"><a class="dropdown-item">Profile</a></li>
+            <li role="menuitem" *ngIf="isLoggedIn()"><a class="dropdown-item">Orders</a></li>
             <li role="menuitem" *ngIf="!isLoggedIn()"><a class="dropdown-item" (click)="openRegisterModal()">Register</a></li>
             <li role="menuitem" *ngIf="!isLoggedIn()"><a class="dropdown-item" (click)="openLoginModal()">Login</a></li>
             <li class="divider dropdown-divider" *ngIf="isLoggedIn()"></li>

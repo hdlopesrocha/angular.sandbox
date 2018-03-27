@@ -24,19 +24,20 @@ import { ProductsComponent } from './pages/products/products.component';
 import { FullscreenGalleryComponent } from './components/fullscreen-gallery/fullscreen-gallery.component';
 import { AddressModalComponent } from './components/address-modal/address-modal.component';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import {AddressesComponent} from "./pages/addresses/addresses.component";
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
   {path: 'home', component: HomeComponent},
   {path: 'checkout', component: CheckoutComponent},
+  {path: 'addresses', component: AddressesComponent},
   {path: 'products', component: ProductsComponent}
 ];
-
-
 
 @NgModule({
   declarations: [
     AppComponent,
+    AddressesComponent,
     LoginModalComponent,
     RegisterModalComponent,
     CartPopoverComponent,
@@ -82,6 +83,7 @@ const routes: Routes = [
   ],
   bootstrap: [AppComponent],
   entryComponents: [
+    AddressesComponent,
     LoginModalComponent,
     RegisterModalComponent,
     AddressModalComponent,

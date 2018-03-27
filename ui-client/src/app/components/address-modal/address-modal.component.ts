@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit} from '@angular/core';
 import {Address, Country, SaveAddressCommand} from "../../api/user";
 import {Api} from "../../service/api.service";
 import {BsModalRef} from "ngx-bootstrap";
@@ -11,6 +11,9 @@ import {BsModalRef} from "ngx-bootstrap";
 export class AddressModalComponent implements OnInit {
   @Input()
   public address: Address;
+  @Input()
+  private addressChanged: EventEmitter<boolean>;
+
   private countries: Country[];
 
   constructor(private api: Api, public modal: BsModalRef) { }
@@ -23,12 +26,12 @@ export class AddressModalComponent implements OnInit {
     this.modal.hide();
   }
 
-
   submit() {
     const command = new SaveAddressCommand();
     command.address = this.address;
     this.api.saveAddress(command).subscribe(() => {
       this.close();
+      this.addressChanged.emit(true);
     });
   }
 }

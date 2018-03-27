@@ -3,7 +3,7 @@
       <app-address-card class="col-lg-4 col-md-6 col-sm-12"
                         *ngFor="let address of addresses"
                         [address]="address"
-                        [selectable]="true"
+                        [selectable]="false"
                         [addressChanged]="addressChanged"
                         (deleteAddressEvent)="onAddressDeleted($event)">
       </app-address-card>
