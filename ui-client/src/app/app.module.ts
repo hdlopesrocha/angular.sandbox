@@ -13,7 +13,6 @@ import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { CartPopoverComponent } from './components/cart-popover/cart-popover.component';
-import { CartDetailsComponent } from './components/cart-details/cart-details.component';
 import { ProductCardComponent } from './components/product-card/product-card.component';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { RouterModule, Routes} from '@angular/router';
@@ -25,13 +24,15 @@ import { FullscreenGalleryComponent } from './components/fullscreen-gallery/full
 import { AddressModalComponent } from './components/address-modal/address-modal.component';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import {AddressesComponent} from "./pages/addresses/addresses.component";
+import { ConfirmOrderComponent } from './pages/confirm-order/confirm-order.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
   {path: 'home', component: HomeComponent},
   {path: 'checkout', component: CheckoutComponent},
   {path: 'addresses', component: AddressesComponent},
-  {path: 'products', component: ProductsComponent}
+  {path: 'products', component: ProductsComponent},
+  {path: 'confirm', component: ConfirmOrderComponent}
 ];
 
 @NgModule({
@@ -41,14 +42,14 @@ const routes: Routes = [
     LoginModalComponent,
     RegisterModalComponent,
     CartPopoverComponent,
-    CartDetailsComponent,
     ProductCardComponent,
     CheckoutComponent,
     HomeComponent,
     CheckoutAddressComponent,
     ProductsComponent,
     FullscreenGalleryComponent,
-    AddressModalComponent
+    AddressModalComponent,
+    ConfirmOrderComponent
   ],
   imports: [
     BrowserModule,

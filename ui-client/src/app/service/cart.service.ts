@@ -1,13 +1,24 @@
-import {EventEmitter, Injectable, Output} from '@angular/core';
-import {Cart} from '../api/user';
+import {EventEmitter, Injectable, OnInit, Output} from '@angular/core';
+import {Cart, SaveCartCommand} from '../api/user';
+import {Api} from "./api.service";
 
 @Injectable()
-export class CartService {
+export class CartService implements  OnInit {
 
+  public cart: Cart;
   @Output()
-  public cartUpdated: EventEmitter<Cart> = new EventEmitter();
+  public cartUpdated: EventEmitter<any> = new EventEmitter();
 
-  constructor() { }
+  constructor(public api: Api) {
+    this.cart = this.getLocalCart();
+  }
+
+  ngOnInit(): void {
+    this.api.getCart().subscribe(cart => {
+      this.cart = cart;
+      this.saveCart(cart);
+    });
+  }
 
   public addToCart(cart: Cart, product: string, amount: number) {
     if (!cart.amounts[product]) {
@@ -21,13 +32,16 @@ export class CartService {
     return cart;
   }
 
-  public updateCart(cart: Cart) {
+  public saveCart(cart: Cart) {
     localStorage.setItem('cart', JSON.stringify(cart));
     console.log('cart updated', cart);
-    this.cartUpdated.emit(cart);
+    const command = new SaveCartCommand();
+    command.cart = this.cart;
+    this.api.setCart(command);
+    this.cartUpdated.emit();
   }
 
-  getLocalCart(): Cart {
+  private getLocalCart(): Cart {
     const cartStr = localStorage.getItem('cart');
     const cart = (cartStr ? JSON.parse(cartStr) : new Cart()) as Cart;
     if (!cart.amounts) {

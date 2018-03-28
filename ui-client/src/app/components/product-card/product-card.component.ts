@@ -26,17 +26,8 @@ export class ProductCardComponent implements OnInit {
   }
 
   submit() {
-    this.api.getCart().subscribe(cart => {
-      this.cartService.addToCart(cart, this.product.id, this.amount);
-      this.cartService.updateCart(cart);
-      const command = new SaveCartCommand();
-      command.cart = cart;
-      this.api.setCart(command);
-    }, () => {
-      const cart = this.cartService.getLocalCart();
-      this.cartService.addToCart(cart, this.product.id, this.amount);
-      this.cartService.updateCart(cart);
-    });
+      this.cartService.addToCart(this.cartService.cart, this.product.id, this.amount);
+      this.cartService.saveCart(this.cartService.cart);
   }
 
   toggleFullScreen(product: Product) {

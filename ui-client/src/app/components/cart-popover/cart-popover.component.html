@@ -7,17 +7,17 @@
     <div class="col-12">
       {{product.price['EUR']}}€
       <fa name="times"></fa>
-      {{cart.amounts[product.id]}} = {{product.price['EUR'] * cart.amounts[product.id]}}€
+      {{cartService.cart.amounts[product.id]}} = {{product.price['EUR'] * cartService.cart.amounts[product.id]}}€
 
       <div class="input-group">
         <input class="form-control"
                type="number"
                min="1"
-               [(ngModel)]="cart.amounts[product.id]"
-               (change)="updateCart(cart)"/>
+               [(ngModel)]="cartService.cart.amounts[product.id]"
+               (change)="updateCart(cartService.cart)"/>
         <button type="button"
                 class="btn btn-danger"
-                (click)="deleteProduct(cart, product)">
+                (click)="deleteProduct(cartService.cart, product)">
           <fa name="trash"></fa>
         </button>
       </div>

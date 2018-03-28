@@ -1,7 +1,6 @@
 package com.enter4ward.user.command;
 
 import com.enter4ward.common.commands.Command;
-import com.enter4ward.user.model.Address;
 import com.enter4ward.user.model.Cart;
 
 public class SaveCartCommand extends Command {

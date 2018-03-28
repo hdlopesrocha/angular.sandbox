@@ -1,9 +1,9 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Api} from "../../service/api.service";
-import {Address, Country, CreateOrderCommand, Currency, SaveAddressCommand} from "../../api/user";
-import {CartService} from "../../service/cart.service";
+import {Address} from "../../api/user";
 import {BsModalRef, BsModalService} from "ngx-bootstrap";
 import {AddressModalComponent} from "../address-modal/address-modal.component";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-address-card',
@@ -22,21 +22,14 @@ export class CheckoutAddressComponent implements OnInit {
   @Input()
   private addressChanged: EventEmitter<boolean>;
 
-  constructor(private api: Api, private cartService: CartService, public modalService: BsModalService) {
+  constructor(private api: Api, public modalService: BsModalService, public router: Router) {
   }
 
   ngOnInit() {
   }
 
   useAddress() {
-    const command = new CreateOrderCommand();
-    command.address = this.address;
-    command.currency = Currency.EUR;
-    command.cart = this.cartService.getLocalCart();
-
-    this.api.createOrder(command).subscribe(() => {
-      console.log("CreateOrderCommand OK!");
-    });
+    this.router.navigate(['/confirm', { address: this.address }]);
   }
 
   editAddress() {

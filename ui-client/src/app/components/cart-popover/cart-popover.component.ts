@@ -10,17 +10,22 @@ import {CartService} from '../../service/cart.service';
 })
 export class CartPopoverComponent implements OnInit {
 
-  public cart: Cart;
   public products: Product[] = [];
 
   constructor(public api: Api, private cartService: CartService) {
 
   }
 
-  onCartArrived(cart: Cart) {
-    this.cart = cart;
-    if (Object.keys(cart.amounts).length) {
-      this.api.getProducts(this.getKeys(cart.amounts)).subscribe(list => {
+  ngOnInit() {
+    this.loadProducts();
+    this.cartService.cartUpdated.subscribe(() => {
+      this.loadProducts();
+    });
+  }
+
+  loadProducts(){
+    if (Object.keys(this.cartService.cart.amounts).length) {
+      this.api.getProducts(this.getKeys(this.cartService.cart.amounts)).subscribe(list => {
         this.products = [];
         list.forEach(prod => {
           this.products.push(prod);
@@ -31,28 +36,14 @@ export class CartPopoverComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
-    this.api.getCart().subscribe(cart => {
-      this.onCartArrived(cart)
-    }, () => {
-      this.onCartArrived(this.cartService.getLocalCart())
-    });
-    this.cartService.cartUpdated.subscribe(cart => {
-      this.onCartArrived(cart);
-    });
-  }
-
   updateCart(cart: Cart) {
-    this.cartService.updateCart(cart);
-    const command = new SaveCartCommand();
-    command.cart = cart;
-    this.api.setCart(command);
+    this.cartService.saveCart(cart);
   }
 
   deleteProduct(cart: Cart, product) {
     this.products.splice(this.products.indexOf(product), 1);
-    delete this.cart.amounts[product.id];
-    this.updateCart(cart);
+    delete cart.amounts[product.id];
+    this.cartService.saveCart(cart);
   }
 
   getKeys(map) {
