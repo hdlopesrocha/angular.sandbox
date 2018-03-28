@@ -1,6 +1,6 @@
 import {Component, ElementRef, QueryList, Renderer2, ViewChildren, ViewContainerRef} from '@angular/core';
 import {RegisterUserViaEmailCommand} from '../../api/user';
-import {Api} from '../../service/api.service';
+import {ApiService} from '../../service/api.service';
 import {BsModalRef, TooltipConfig, TooltipDirective} from 'ngx-bootstrap';
 import {ComponentLoaderFactory} from 'ngx-bootstrap/component-loader/component-loader.factory';
 import {TranslateService} from '@ngx-translate/core';
@@ -23,7 +23,7 @@ export class RegisterModalComponent {
     });
   }
 
-  constructor(private api: Api,
+  constructor(private api: ApiService,
               public modal: BsModalRef,
               public factory: ComponentLoaderFactory,
               public renderer: Renderer2,

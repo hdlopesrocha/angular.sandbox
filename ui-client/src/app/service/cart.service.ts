@@ -1,6 +1,6 @@
 import {EventEmitter, Injectable, OnInit, Output} from '@angular/core';
 import {Cart, SaveCartCommand} from '../api/user';
-import {Api} from "./api.service";
+import {ApiService} from "./api.service";
 
 @Injectable()
 export class CartService implements  OnInit {
@@ -9,7 +9,7 @@ export class CartService implements  OnInit {
   @Output()
   public cartUpdated: EventEmitter<any> = new EventEmitter();
 
-  constructor(public api: Api) {
+  constructor(public api: ApiService) {
     this.cart = this.getLocalCart();
   }
 

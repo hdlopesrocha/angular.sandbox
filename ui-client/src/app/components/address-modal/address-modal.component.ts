@@ -1,7 +1,8 @@
-import {Component, EventEmitter, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Address, Country, SaveAddressCommand} from "../../api/user";
-import {Api} from "../../service/api.service";
+import {ApiService} from "../../service/api.service";
 import {BsModalRef} from "ngx-bootstrap";
+import {AddressService} from "../../service/address.service";
 
 @Component({
   selector: 'app-address-modal',
@@ -11,12 +12,9 @@ import {BsModalRef} from "ngx-bootstrap";
 export class AddressModalComponent implements OnInit {
   @Input()
   public address: Address;
-  @Input()
-  private addressChanged: EventEmitter<boolean>;
-
   private countries: Country[];
 
-  constructor(private api: Api, public modal: BsModalRef) { }
+  constructor(private api: ApiService, private addressService: AddressService, public modal: BsModalRef) { }
 
   ngOnInit() {
     this.countries = this.api.getCountries();
@@ -31,7 +29,7 @@ export class AddressModalComponent implements OnInit {
     command.address = this.address;
     this.api.saveAddress(command).subscribe(() => {
       this.close();
-      this.addressChanged.emit(true);
+      this.addressService.addressChanged.emit();
     });
   }
 
@@ -39,7 +37,7 @@ export class AddressModalComponent implements OnInit {
     if (this.address.id) {
       this.api.deleteAddress(this.address.id).subscribe(() => {
         this.close();
-        this.addressChanged.emit(true);
+        this.addressService.addressChanged.emit();
       });
     }
   }

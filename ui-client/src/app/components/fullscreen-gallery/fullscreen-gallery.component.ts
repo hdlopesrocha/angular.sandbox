@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Api} from "../../service/api.service";
+import {ApiService} from "../../service/api.service";
 
 @Component({
   selector: 'app-fullscreen-gallery',
@@ -9,7 +9,7 @@ import {Api} from "../../service/api.service";
 export class FullscreenGalleryComponent implements OnInit {
   @Input()
   public images: string[] = [];
-  constructor(private api: Api) { }
+  constructor(private api: ApiService) { }
 
   ngOnInit() {
     console.log(this.images);

@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Product, SaveCartCommand} from '../../api/user';
-import {Api} from '../../service/api.service';
+import {Product} from '../../api/user';
+import {ApiService} from '../../service/api.service';
 import {CartService} from '../../service/cart.service';
 import {BsModalRef, BsModalService} from 'ngx-bootstrap';
 import {FullscreenGalleryComponent} from '../fullscreen-gallery/fullscreen-gallery.component';
@@ -17,7 +17,7 @@ export class ProductCardComponent implements OnInit {
   public amount: number;
   public loginModalRef: BsModalRef;
 
-  constructor(private api: Api, private cartService: CartService,
+  constructor(private api: ApiService, private cartService: CartService,
               public modalService: BsModalService) {
     this.amount = 1;
   }

@@ -1,6 +1,13 @@
 import {
-  AuthenticateViaEmailPasswordCommand, Product, RegisterUserViaEmailCommand, Cart, Address, Country,
-  CreateOrderCommand, SaveAddressCommand, SaveCartCommand
+  Address,
+  AuthenticateViaEmailPasswordCommand,
+  Cart,
+  Country,
+  CreateOrderCommand,
+  Product,
+  RegisterUserViaEmailCommand,
+  SaveAddressCommand,
+  SaveCartCommand
 } from '../api/user';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {NgModule} from '@angular/core';
@@ -14,7 +21,7 @@ import {CommandResult} from "../api/common";
   ],
   declarations: []
 })
-export class Api {
+export class ApiService {
 
   public host = 'http://localhost:8080';
 

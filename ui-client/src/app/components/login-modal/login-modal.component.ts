@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
-import { AuthenticateViaEmailPasswordCommand} from '../../api/user';
-import { Api } from '../../service/api.service';
+import {AuthenticateViaEmailPasswordCommand} from '../../api/user';
+import {ApiService} from '../../service/api.service';
 import {BsModalRef} from 'ngx-bootstrap';
 
 @Component({
@@ -12,7 +12,7 @@ export class LoginModalComponent {
   command: AuthenticateViaEmailPasswordCommand = new AuthenticateViaEmailPasswordCommand();
   errors: Object = new Object();
 
-  constructor(private api: Api, public modal: BsModalRef) {
+  constructor(private api: ApiService, public modal: BsModalRef) {
   }
   submitForm(event){
     this.api.auth(this.command).subscribe(response => {

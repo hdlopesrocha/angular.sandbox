@@ -1,8 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Address, Cart, CreateOrderCommand, Currency} from "../../api/user";
-import {Api} from "../../service/api.service";
+import {Address, CreateOrderCommand, Currency} from "../../api/user";
+import {ApiService} from "../../service/api.service";
 import {CartService} from "../../service/cart.service";
 import {Router} from "@angular/router";
+import {AddressService} from "../../service/address.service";
 
 @Component({
   selector: 'app-confirm-order',
@@ -10,10 +11,8 @@ import {Router} from "@angular/router";
   styleUrls: ['./confirm-order.component.css']
 })
 export class ConfirmOrderComponent implements OnInit {
-  @Input()
-  public address: Address;
 
-  constructor(private api: Api, public cartService: CartService, router: Router) {
+  constructor(private api: ApiService, public addressService: AddressService, public cartService: CartService, router: Router) {
     console.log(router);
   }
   ngOnInit() {
@@ -23,7 +22,7 @@ export class ConfirmOrderComponent implements OnInit {
 
   confirm() {
     const command = new CreateOrderCommand();
-    command.address = this.address;
+    command.address = this.addressService.address;
     command.currency = Currency.EUR;
     command.cart = this.cartService.cart;
 

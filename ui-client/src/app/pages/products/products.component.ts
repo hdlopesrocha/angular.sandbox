@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Product} from '../../api/user';
-import {Api} from '../../service/api.service';
+import {ApiService} from '../../service/api.service';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({
@@ -12,7 +12,7 @@ export class ProductsComponent implements OnInit {
 
   public products: Product[];
 
-  constructor(private api: Api, translate: TranslateService) {
+  constructor(private api: ApiService, translate: TranslateService) {
     this.api.getProducts([]).subscribe(list => {
       this.products = list;
     });

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Api} from './service/api.service';
+import {ApiService} from './service/api.service';
 import {BsModalRef, BsModalService} from 'ngx-bootstrap';
 import {LoginModalComponent} from './components/login-modal/login-modal.component';
 import {RegisterModalComponent} from './components/register-modal/register-modal.component';
@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
   public loginModalRef: BsModalRef;
   public registerModalRef: BsModalRef;
 
-  constructor(private api: Api, public modalService: BsModalService, translate: TranslateService) {
+  constructor(private api: ApiService, public modalService: BsModalService, translate: TranslateService) {
     // this language will be used as a fallback when a translation isn't found in the current language
     translate.setDefaultLang('en');
 

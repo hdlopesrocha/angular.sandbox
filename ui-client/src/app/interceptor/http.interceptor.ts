@@ -1,15 +1,22 @@
-import { Injectable, Injector } from '@angular/core';
-import {HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse, HttpErrorResponse} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {
+  HttpErrorResponse,
+  HttpEvent,
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest,
+  HttpResponse
+} from '@angular/common/http';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/do';
-import {Api} from '../service/api.service';
+import {ApiService} from '../service/api.service';
 import {Observable} from 'rxjs/Observable';
 
 
 @Injectable()
 export class MyHttpInterceptor implements HttpInterceptor {
-  constructor(public api: Api) { }
+  constructor(public api: ApiService) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if(this.api.getToken()) {

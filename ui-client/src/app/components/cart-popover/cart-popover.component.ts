@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Cart, Product, SaveCartCommand} from '../../api/user';
-import {Api} from '../../service/api.service';
+import {Cart, Product} from '../../api/user';
+import {ApiService} from '../../service/api.service';
 import {CartService} from '../../service/cart.service';
 
 @Component({
@@ -12,7 +12,7 @@ export class CartPopoverComponent implements OnInit {
 
   public products: Product[] = [];
 
-  constructor(public api: Api, private cartService: CartService) {
+  constructor(public api: ApiService, private cartService: CartService) {
 
   }
 

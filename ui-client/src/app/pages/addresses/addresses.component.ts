@@ -1,8 +1,9 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {Api} from '../../service/api.service';
+import {ApiService} from '../../service/api.service';
 import {Address} from '../../api/user';
 import {AddressModalComponent} from "../../components/address-modal/address-modal.component";
 import {BsModalRef, BsModalService} from "ngx-bootstrap";
+import {AddressService} from "../../service/address.service";
 
 @Component({
   selector: 'app-addresses',
@@ -12,16 +13,14 @@ import {BsModalRef, BsModalService} from "ngx-bootstrap";
 export class AddressesComponent implements OnInit {
   public addresses: Address[];
   private addressModalRef: BsModalRef;
-  @Output()
-  private addressChanged: EventEmitter<boolean> = new EventEmitter();
 
-  constructor(private api: Api, public modalService: BsModalService) { }
+  constructor(private api: ApiService, public addressService: AddressService, public modalService: BsModalService) { }
 
   ngOnInit() {
     document.body.style.backgroundImage = 'url(http://localhost:8080/api/public/file/background_blur.jpg)';
 
     this.loadAdresses();
-    this.addressChanged.subscribe(() => {
+    this.addressService.addressChanged.subscribe(() => {
       this.loadAdresses();
     });
   }
@@ -35,8 +34,7 @@ export class AddressesComponent implements OnInit {
   addNewAddress(){
     this.addressModalRef = this.modalService.show(AddressModalComponent, {
       initialState: {
-        address: new Address(),
-        addressChanged: this.addressChanged
+        address: new Address()
       }
     });
   }
