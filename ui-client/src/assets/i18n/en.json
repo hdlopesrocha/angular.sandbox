@@ -48,6 +48,9 @@
   "user" : {
     "title": "User"
   },
+  "order":{
+    "confirm": "Confirm order"
+  },
   "country" : {
     "FR": "France",
     "GB": "United Kingdom",

@@ -1,16 +1,52 @@
 <div class="container">
-  <div class="row col-12">
-    <div class="col-12">
-      <div class="card">
-        <div class="card-body">
-          {{ cartService.cart | json}}
-          <br>
-          {{ addressService.address | json}}
+  <div class="card">
+    <div class="card-body">
+      <div class="row" *ngIf="addressService.address">
+        <fa name="address-card"></fa>
+        <div class="col-12">
+          {{addressService.address.addressLine1}}
         </div>
-        <div class="card-footer">
-
+        <div class="col-12">
+          {{addressService.address.addressLine2}}
+        </div>
+        <div class="col-12">
+          {{addressService.address.postalCode}} - {{addressService.address.city}}
+        </div>
+        <div class="col-12">
+          {{('country.' + addressService.address.country) | translate}}
         </div>
       </div>
+      <div class="row" *ngIf="addressService.address">
+        <fa name="phone"></fa>
+        <div class="col-12">{{addressService.address.phone}}</div>
+      </div>
+      <div class="row" *ngIf="addressService.address">
+        <fa name="comment"></fa>
+        <div class="col-12">{{addressService.address.comment}}</div>
+      </div>
+
+      <div class="row" *ngIf="products">
+        <fa name="shopping-cart"></fa>
+        <div class="col-12 product" *ngFor="let product of products">
+          <div class="fullWidth">
+            {{product.title['EN']}}
+          </div>
+          <div class="fullWidth">
+            {{product.price['EUR']}}€
+            <fa name="times"></fa>
+            {{cartService.cart.amounts[product.id]}} = {{product.price['EUR'] * cartService.cart.amounts[product.id]}}€
+          </div>
+        </div>
+        <div class="col-12">
+          <b>Total:</b> {{getTotal('EUR')}}€
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <button type="button" class="btn btn-success" (click)="confirm()">
+        <fa name="check"></fa>
+        {{'order.confirm' | translate}}
+      </button>
     </div>
   </div>
 </div>

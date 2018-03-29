@@ -25,6 +25,7 @@ import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 import {AddressesComponent} from "./pages/addresses/addresses.component";
 import {ConfirmOrderComponent} from './pages/confirm-order/confirm-order.component';
 import {AddressService} from "./service/address.service";
+import { PaymentChoiceComponent } from './pages/payment-choice/payment-choice.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -32,6 +33,7 @@ const routes: Routes = [
   {path: 'checkout', component: CheckoutComponent},
   {path: 'addresses', component: AddressesComponent},
   {path: 'products', component: ProductsComponent},
+  {path: 'payment', component: PaymentChoiceComponent},
   {path: 'confirm', component: ConfirmOrderComponent}
 ];
 
@@ -49,7 +51,8 @@ const routes: Routes = [
     ProductsComponent,
     FullscreenGalleryComponent,
     AddressModalComponent,
-    ConfirmOrderComponent
+    ConfirmOrderComponent,
+    PaymentChoiceComponent
   ],
   imports: [
     BrowserModule,

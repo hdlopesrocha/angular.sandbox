@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ApiService} from '../../service/api.service';
 import {Address} from '../../api/user';
 import {AddressModalComponent} from "../../components/address-modal/address-modal.component";

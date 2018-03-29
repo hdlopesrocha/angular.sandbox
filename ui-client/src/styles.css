@@ -39,3 +39,7 @@ html {
 .center {
   margin: auto auto;
 }
+
+.fullWidth {
+  width: 100%;
+}
